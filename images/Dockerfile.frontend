@@ -1,0 +1,4 @@
+# use the default nginx image
+FROM nginx:alpine
+# simply copy our static html over
+COPY . /usr/share/nginx/html

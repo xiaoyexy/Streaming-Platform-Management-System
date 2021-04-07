@@ -1,0 +1,53 @@
+version: "3.7"
+networks:
+    # the internal network is a bridge network used by the
+    # api container and database
+    # We could also bypass this in favor of port fowarding to the host machine and
+    # communicating over tcp through the host, but this showcases a way to use docker's internal DNS to
+    # resolve networks
+    internal:
+        name: gatech_internal
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 10.17.0.0/16
+services:
+    # api holds all of our backend code
+    api:
+        image: gatech/backend
+        networks:
+            - internal
+        ports:
+            - "8080:8080"
+        environment:
+            # NOTE: db refers to the db service defined below. Docker will automatically resolve this to the container
+            - DB_HOST=db
+            - DB_USER=postgres
+            - DB_PASS=postgres
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+        depends_on:
+            - db
+        # sleep for 5 seconds to give the db time to boot up
+        command: >
+            sh -c "sleep 5 &&
+               java -jar /streamingwars/streamingwars-0.0.1-SNAPSHOT.jar"
+
+    # site is the container holding all of the front end code
+    site:
+        image: gatech/frontend
+        ports:
+            # expose the container's port 80 on the host's 3001
+            - "3001:80"
+        environment:
+           - NGINX_HOST=localhost
+           - NGINX_PORT=80
+    # db is a postgres instance
+    db:
+        image: postgres:9.6.12
+        networks:
+            - internal
+        environment:
+            - POSTGRES_PASSWORD=postgres
+        ports:
+            - "5432:5432"
