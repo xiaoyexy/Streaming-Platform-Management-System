@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @SpringBootApplication
 @RestController
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin(origins = "http://localhost:3000")
 public class StreamingwarsApplication {
 
     // NOTE: autowired is a special annotation provided by the spring framework 
