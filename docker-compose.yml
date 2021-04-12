@@ -35,30 +35,30 @@ services:
 
     # site is the container holding all of the front end code
     frontend1:
-        image: gatech/frontend
+        image: gatech/web
         ports:
             # expose the container's port 80 on the host's 3001
-            - "3001:80"
+            - "3001:3001"
         environment:
-            - APPID=frontend1
+            - APPID=3001
             - NGINX_HOST=localhost
             - NGINX_PORT=80
 
     frontend2:
-        image: gatech/frontend
+        image: gatech/web
         ports:
-            - "3002:80"
+            - "3002:3002"
         environment:
-            - APPID=frontend2
+            - APPID=3002
             - NGINX_HOST=localhost
             - NGINX_PORT=80
 
     frontend3:
-        image: gatech/frontend
+        image: gatech/web
         ports:
-            - "3003:80"
+            - "3003:3003"
         environment:
-            - APPID=frontend3
+            - APPID=3003
             - NGINX_HOST=localhost
             - NGINX_PORT=80
 

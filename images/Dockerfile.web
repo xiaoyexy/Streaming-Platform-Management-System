@@ -1,0 +1,5 @@
+FROM node:12
+WORKDIR /home/node/web
+COPY . /home/node/web
+RUN npm install
+CMD npm start

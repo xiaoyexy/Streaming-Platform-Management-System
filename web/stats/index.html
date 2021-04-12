@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Number</title>
+</head>
+
+<body>
+  <h1 id=randomValue></h1>
+  <script>
+    fetch("http://localhost:8080/random")
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (resp) {
+        document.querySelector("#randomValue").innerHTML = resp.value;
+      })
+      .catch(function (error) {
+        console.log("Error: " + error);
+      });
+  </script>
+</body>
+</html>

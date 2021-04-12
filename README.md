@@ -10,6 +10,8 @@ We can simply run `make && make up` to start our service. For those that do not 
 ```
 docker build -t gatech/backend -f ./images/Dockerfile.backend ./backend
 docker build -t gatech/frontend -f ./images/Dockerfile.frontend ./frontend
+docker build -t gatech/web -f ./images/Dockerfile.web ./web
+docker build -t gatech/nginx -f ./images/Dockerfile.nginx ./nginx
 docker-compose -p gatech -f docker-compose.yml up -d
 ```
 The first two commands are building the backend and frontend images defined by our dockerfiles, and the third is using docker-compose to deploy the service locally.
