@@ -14,7 +14,7 @@ public class RandomNumber {
     private Integer value;
 
     public RandomNumber() {}
-  
+
     public RandomNumber(Integer value) {
         this.value = value;
     }
