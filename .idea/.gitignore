@@ -1,8 +1,5 @@
 # Default ignored files
-/shelf/
 /workspace.xml
 # Datasource local storage ignored files
-/../../../../../:\Github\CS6310\2021-01-A6\.idea/dataSources/
 /dataSources.local.xml
-# Editor-based HTTP Client requests
-/httpRequests/
+/dataSources/
