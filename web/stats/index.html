@@ -1,22 +1,300 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Random Number</title>
+  <meta charset="utf-8" />
+  <title>Streaming War</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <base href=".">
+
+  <style>
+    select {
+      width: 180px;
+      height: 30px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      padding-top: 20px;
+    }
+  </style>
 </head>
 
 <body>
-  <h1 id=randomValue></h1>
+  <h1 id="randomValue"></h1>
+
+  <div class="container">
+    <h2>
+      Streaming War&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-info btn-xs active">
+        Stop Program
+      </button>
+    </h2>
+
+    <h4>
+      Oct 2020&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-info btn-xs active">
+        Switch to Next Month
+      </button>
+    </h4>
+
+    <div style="padding-top: 10px" id="create-action">
+      <b>Create</b>
+      <select class="select">
+        <option value="demo" selected>Demographic group</option>
+        <option value="event">Event (PPV or Movie)</option>
+        <option value="stream">Stream Service</option>
+        <option value="studio">Studio</option>
+      </select>&nbsp;&nbsp;
+      <button type="button" onclick="create_btn()" class="btn btn-info btn-xs">Go</button>
+    </div>
+
+    <div style="padding-top: 10px">
+      <b>Update</b>
+      <select class="select" id="update">
+        <option value="demo">Demographic group</option>
+        <option value="event">Event (PPV or Movie)</option>
+        <option value="stream">Stream Service</option>
+      </select>&nbsp;&nbsp;
+      <button type="button" class="btn btn-info btn-xs">Go</button>
+    </div>
+
+    <div style="padding-top: 10px" id="offer-action">
+      <b>Offer&nbsp;&nbsp;</b>
+      <select class="select">
+        <option value="movie">Movie</option>
+        <option value="ppv">PPV</option>
+      </select>&nbsp;&nbsp;
+      <button type="button" class="btn btn-info btn-xs">Go</button>
+    </div>
+
+    <div style="padding-top: 10px">
+      <b>Retract Event</b>&nbsp;&nbsp;
+      <button type="button" class="btn btn-info btn-xs">Go</button>
+    </div>
+
+    <div style="padding-top: 10px">
+      <b>Watch Event</b>&nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-info btn-xs">Go</button>
+    </div>
+
+    <div style="padding-top: 10px">
+      <b>Display</b>
+      <select class="select" id="display">
+        <option value="demo">Demographic group</option>
+        <option value="event">Event (PPV or Movie)</option>
+        <option value="stream">Stream Service</option>
+        <option value="studio">Studio</option>
+        <option value="offer">Offer</option>
+      </select>&nbsp;&nbsp;
+      <button type="button" class="btn btn-info btn-xs">Go</button>
+    </div>
+
+    <div class="display"></div>
+  </div>
+
+  <!-- create action modal except event-->
+  <div class="modal" id="create-modal" role="dialog">
+    <div style="width: 500px" class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          <h4 class="modal-title">Create Demographic Group</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-content">
+
+            <div class="create-div shortName">
+              <label for="shortName" class="gcontrol-label">Short Name:</label>
+              <div class="form-content">
+                <textarea type="text" class="form-control" id="shortName" name="shortName"
+                  style="resize:vertical;max-height:30px; min-height: 20px;"></textarea>
+              </div>
+            </div>
+
+            <div class="create-div longName">
+              <label for="longName" class="gcontrol-label">Long Name:</label>
+              <div class="form-content">
+                <textarea type="text" class="form-control" id="longName" name="longName"
+                  style="resize:vertical;max-height:30px; min-height: 20px;"></textarea>
+              </div>
+            </div>
+
+            <div class="create-div numAccount">
+              <label for="numAccount" class="gcontrol-label">Num of Accounts:</label>
+              <div class="form-content">
+                <input type="number" id="numAccount" name="numAccount"></input> USD
+              </div>
+            </div>
+
+            <div class="create-div subscribePrice">
+              <label for="subscribePrice" class="gcontrol-label">Subscription Price:</label>
+              <div class="form-content">
+                <input type="number" id="subscribePrice" name="subscribePrice"></input> USD
+              </div>
+            </div>
+
+            <div class="create-div eventType">
+              <label for="eventType" class="gcontrol-label">Event Type:</label>
+              <select class="form-control" id="eventType" style=" width: 150px;">
+                <option value="No">PPV</option>
+                <option value="Yes">Movie</option>
+              </select>
+            </div>
+
+            <div class="create-div eventName">
+              <label for="eventName" class="gcontrol-label">Event Name:</label>
+              <div class="form-content">
+                <textarea type="text" class="form-control" id="eventName" name="eventName"
+                  style="resize:vertical;max-height:30px; min-height: 20px;"></textarea>
+              </div>
+            </div>
+
+            <div class="create-div eventYear">
+              <label for="eventYear" class="gcontrol-label">Event Year:</label>
+              <div class="form-content">
+                <input type="number" id="eventYear" name="eventYear"></input>
+              </div>
+            </div>
+
+            <div class="create-div  eventDuration">
+              <label for="eventDuration" class="gcontrol-label">Event Duration:</label>
+              <div class="form-content">
+                <input type="number" id="eventDuration" name="eventDuration"></input>
+              </div>
+            </div>
+
+            <div class="create-div eventStudio">
+              <label for="eventStudio" class="gcontrol-label">Event Studio:</label>
+              <div class="form-content">
+                <textarea type="text" class="form-control" id="eventStudio" name="eventStudio"
+                  style="resize:vertical;max-height:30px; min-height: 20px;"></textarea>
+              </div>
+            </div>
+
+            <div class="create-div  eventFee">
+              <label for="eventFee" class="gcontrol-label">Event License Fee:</label>
+              <div class="form-content">
+                <input type="number" id="eventFee" name="eventFee"></input>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            Cancel
+          </button>
+          <button type="button" onclick="create_submit_btn()" class="btn btn-default submit-cteate-btn">
+            Submit
+          </button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+
+
   <script>
     fetch("http://localhost:8080/random")
       .then(function (response) {
+        console.log(response);
         return response.json();
       })
+      // .then(data => console.log(data))
       .then(function (resp) {
+        console.log(resp);
         document.querySelector("#randomValue").innerHTML = resp.value;
       })
       .catch(function (error) {
         console.log("Error: " + error);
       });
   </script>
+
+  <script>
+    function fetchurl(url) {
+      fetch(url)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (resp) {
+          console.log(resp);
+
+        })
+        .catch(function (error) {
+          console.log("Error: " + error);
+        });
+
+    }
+
+    function create_btn() {
+      var create_action = $('#create-action').find("option:selected").val();
+      console.log("create_btn", create_action);
+
+      var x = document.getElementsByClassName("create-div");
+      for (var i = 0; i < x.length; i++) {
+        x[i].style.display = "inline"
+      }
+
+      if (create_action == "event") {
+        $('#create-modal').find('.modal-title').text("Create Event ");
+        $('#create-modal').find('.shortName').hide();
+        $('#create-modal').find('.longName').hide();
+        $('#create-modal').find('.numAccount').hide();
+        $('#create-modal').find('.subscribePrice').hide();
+
+      } else {  //not event creation
+        $('#create-modal').find('.eventDuration').hide();
+        $('#create-modal').find('.eventStudio').hide();
+        $('#create-modal').find('.eventType').hide();
+        $('#create-modal').find('.eventYear').hide();
+        $('#create-modal').find('.eventName').hide();
+        $('#create-modal').find('.eventFee').hide();
+
+        if (create_action == "demo") {
+          $('#create-modal').find('.subscribePrice').hide();
+
+        } else if (create_action == "stream") {
+          $('#create-modal').find('.modal-title').text("Create Stream Service ");
+          $('#create-modal').find('.numAccount').hide();
+
+
+        } else if (create_action == "studio") {
+          $('#create-modal').find('.modal-title').text("Create Studio");
+          $('#create-modal').find('.numAccount').hide();
+          $('#create-modal').find('.subscribePrice').hide();
+        }
+      }
+      $('#create-modal').modal();
+    }
+
+
+    function create_submit_btn() {
+      var create_action = $('#create-action').find("option:selected").val();
+      if (create_action == "demo") {
+        var shortName = $('#create-modal').find('#shortName').val();
+        var longName = $('#create-modal').find('#longName').val();
+        var numAccount = $('#create-modal').find('#numAccount').val();
+        var command = "create_demo#" + shortName + "_" + longName + "_" + numAccount
+        console.log(command);
+        // var resp = fetchurl("http://localhost:8080/" + command)
+
+      }
+    }
+
+  </script>
+
+
+
 </body>
+
 </html>
