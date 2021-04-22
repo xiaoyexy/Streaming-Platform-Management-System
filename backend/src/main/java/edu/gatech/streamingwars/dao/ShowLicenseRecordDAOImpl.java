@@ -21,7 +21,7 @@ public class ShowLicenseRecordDAOImpl implements ShowLicenseRecordDAO{
     }
 
     @Override
-    public ShowLicenseRecord findById(String streamingServiceShortName, String showShortName, String yearMonth) {
+    public ShowLicenseRecord findById(String streamingServiceShortName, String showShortName, Integer showYear) {
         return null;
     }
 

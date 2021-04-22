@@ -5,8 +5,10 @@ import org.springframework.stereotype.Controller;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 
 @Entity
+@IdClass(SubscriptionRecordId.class)
 public class SubscriptionRecord {
 
     @Id
