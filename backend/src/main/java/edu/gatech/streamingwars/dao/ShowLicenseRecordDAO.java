@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ShowLicenseRecordDAO {
     public List<ShowLicenseRecord> findAll();
-    public ShowLicenseRecord findById(String streamingServiceShortName, String showShortName, String yearMonth);
+    public ShowLicenseRecord findById(String streamingServiceShortName, String showShortName, Integer showYear);
     public void save(ShowLicenseRecord showLicenseRecord);
 
 }

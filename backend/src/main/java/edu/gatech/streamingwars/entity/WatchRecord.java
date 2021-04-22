@@ -3,8 +3,10 @@ package edu.gatech.streamingwars.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 
 @Entity
+@IdClass(WatchRecordId.class)
 public class WatchRecord {
 
     @Column(name="percentage_of_account")

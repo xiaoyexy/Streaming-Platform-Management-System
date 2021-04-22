@@ -1,11 +1,9 @@
 package edu.gatech.streamingwars.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
+@IdClass(ShowId.class)
 @Table(name="show")
 public class Show {
 

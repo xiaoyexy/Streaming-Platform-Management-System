@@ -26,7 +26,7 @@ public class TestController {
 
     @GetMapping("/list_demographic_group/{shortName}")
     public DemographicGroup findByDogId(@PathVariable String shortName) {
-        DemographicGroup demographicGroup = demographicGroupDAO.findDemographicGroupByShortName(shortName);
+        DemographicGroup demographicGroup = demographicGroupDAO.findById(shortName);
         return demographicGroup;
     }
 }
