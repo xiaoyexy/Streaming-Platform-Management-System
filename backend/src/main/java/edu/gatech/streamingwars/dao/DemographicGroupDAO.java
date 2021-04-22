@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface DemographicGroupDAO {
     public List<DemographicGroup> findAll();
-    public DemographicGroup findDemographicGroupByShortName(String shortName);
-    public void saveDemographicGroup(DemographicGroup demographicGroup);
+    public DemographicGroup findById(String shortName);
+    public void save(DemographicGroup demographicGroup);
 
 }
 

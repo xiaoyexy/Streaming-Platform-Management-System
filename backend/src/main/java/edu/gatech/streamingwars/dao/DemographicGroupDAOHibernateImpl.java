@@ -38,14 +38,14 @@ public class DemographicGroupDAOHibernateImpl implements DemographicGroupDAO{
     }
 
     @Override
-    public DemographicGroup findDemographicGroupByShortName(String shortName) {
+    public DemographicGroup findById(String shortName) {
         Session currentSession = entityManager.unwrap(Session.class);
         DemographicGroup demographicGroup = currentSession.get(DemographicGroup.class, shortName);
         return demographicGroup;
     }
 
     @Override
-    public void saveDemographicGroup(DemographicGroup demographicGroup) {
+    public void save(DemographicGroup demographicGroup) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.save(demographicGroup);
         return;
