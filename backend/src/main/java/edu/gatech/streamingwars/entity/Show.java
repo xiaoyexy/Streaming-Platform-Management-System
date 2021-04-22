@@ -13,6 +13,7 @@ public class Show {
     @Column(name="short_name")
     private String shortName;
 
+    @Id
     @Column(name="year")
     private Integer year;
 
