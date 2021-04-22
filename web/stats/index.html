@@ -54,14 +54,14 @@
       <button type="button" onclick="create_btn()" class="btn btn-info btn-xs">Go</button>
     </div>
 
-    <div style="padding-top: 10px">
+    <div style="padding-top: 10px" id="update-action">
       <b>Update</b>
-      <select class="select" id="update">
+      <select class="select">
         <option value="demo">Demographic group</option>
         <option value="event">Event (PPV or Movie)</option>
         <option value="stream">Stream Service</option>
       </select>&nbsp;&nbsp;
-      <button type="button" class="btn btn-info btn-xs">Go</button>
+      <button type="button" onclick="update_btn()" class="btn btn-info btn-xs">Go</button>
     </div>
 
     <div style="padding-top: 10px" id="offer-action">
@@ -73,19 +73,19 @@
       <button type="button" class="btn btn-info btn-xs">Go</button>
     </div>
 
-    <div style="padding-top: 10px">
+    <div style="padding-top: 10px" id="retract-action">
       <b>Retract Event</b>&nbsp;&nbsp;
       <button type="button" class="btn btn-info btn-xs">Go</button>
     </div>
 
-    <div style="padding-top: 10px">
+    <div style="padding-top: 10px" id="watch-action">
       <b>Watch Event</b>&nbsp;&nbsp;&nbsp;
       <button type="button" class="btn btn-info btn-xs">Go</button>
     </div>
 
-    <div style="padding-top: 10px">
+    <div style="padding-top: 10px" id="display-action">
       <b>Display</b>
-      <select class="select" id="display">
+      <select class="select">
         <option value="demo">Demographic group</option>
         <option value="event">Event (PPV or Movie)</option>
         <option value="stream">Stream Service</option>
@@ -95,8 +95,9 @@
       <button type="button" class="btn btn-info btn-xs">Go</button>
     </div>
 
-    <div class="display"></div>
+    <div class="display-table"></div>
   </div>
+
 
   <!-- create action modal-->
   <div class="modal" id="create-modal" role="dialog">
@@ -130,7 +131,7 @@
             <div class="create-div numAccount">
               <label for="numAccount" class="gcontrol-label">Num of Accounts:</label>
               <div class="form-content">
-                <input type="number" id="numAccount" name="numAccount"></input> USD
+                <input type="number" id="numAccount" name="numAccount"></input>
               </div>
             </div>
 
@@ -144,8 +145,8 @@
             <div class="create-div eventType">
               <label for="eventType" class="gcontrol-label">Event Type:</label>
               <select class="form-control" id="eventType" style=" width: 150px;">
-                <option value="No">PPV</option>
-                <option value="Yes">Movie</option>
+                <option value="ppv">PPV</option>
+                <option value="movie">Movie</option>
               </select>
             </div>
 
@@ -191,9 +192,9 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">
             Cancel
           </button>
-          <button type="button" onclick="create_confirm_btn()" class="btn btn-default submit-cteate-btn">
+          <botton type="submit" onclick="create_confirm_btn()" class="btn btn-default submit-create-update-btn">
             Submit
-          </button>
+            </button>
         </div>
       </div>
       <!-- /.modal-content -->
@@ -205,6 +206,7 @@
 
 
   <script>
+    // from TA random sample
     fetch("http://localhost:8080/random")
       .then(function (response) {
         return response.json();
@@ -221,6 +223,14 @@
 
   <script>
     function fetchurl(url, params) {
+      for (var key in params) {
+        var value = params[key];
+        if (value == "") {
+          alert("Please enter parameters!")
+          return;
+        }
+      }
+
       fetch(url, {
         method: 'POST', // or 'PUT'
         mode: 'cors',
@@ -246,10 +256,21 @@
       var create_action = $('#create-action').find("option:selected").val();
       console.log("click create", create_action);
 
+      /* show all sections */
       var x = document.getElementsByClassName("create-div");
       for (var i = 0; i < x.length; i++) {
         x[i].style.display = "inline"
       }
+
+      /* reset input empty */
+      $('.create-div').find('input, textarea').each(function () {
+        $(this).val('');
+      });
+
+      /* set function of confirm button */
+      var y = document.getElementsByClassName("submit-create-update-btn")[0];
+      y.setAttribute('onclick', "create_confirm_btn()");
+
 
       if (create_action == "event") {
         $('#create-modal').find('.modal-title').text("Create Event ");
@@ -291,15 +312,135 @@
         var shortName = $('#create-modal').find('#shortName').val();
         var longName = $('#create-modal').find('#longName').val();
         var numAccount = $('#create-modal').find('#numAccount').val();
+
         const data = { "shortName": shortName, 'longName': longName, "numAccount": numAccount }
         console.log("confirm to create", create_action, data);
         fetchurl("http://localhost:8080/api/create_demo", data)
 
+      } else if (create_action == "event") {
+        var eventName = $('#create-modal').find('#eventName').val();
+        var eventYear = $('#create-modal').find('#eventYear').val();
+        var eventType = $('#create-modal').find('#eventType').val();
+        var eventDuration = $('#create-modal').find('#eventDuration').val();
+        var eventStudio = $('#create-modal').find('#eventStudio').val();
+        var eventFee = $('#create-modal').find('#eventFee').val();
+
+        const data = {
+          "eventName": eventName, 'eventYear': eventYear, "eventType": eventType,
+          "eventDuration": eventDuration, 'eventStudio': eventStudio, "eventFee": eventFee
+        }
+        console.log("confirm to create", create_action, data);
+        fetchurl("http://localhost:8080/api/create_event", data)
+
+      } else if (create_action == "stream") {
+        var shortName = $('#create-modal').find('#shortName').val();
+        var longName = $('#create-modal').find('#longName').val();
+        var subscribePrice = $('#create-modal').find('#subscribePrice').val();
+
+        const data = { "shortName": shortName, 'longName': longName, "subscribePrice": subscribePrice }
+        console.log("confirm to create", create_action, data);
+        fetchurl("http://localhost:8080/api/create_stream", data)
+
+      } else if (create_action == "studio") {
+        var shortName = $('#create-modal').find('#shortName').val();
+        var longName = $('#create-modal').find('#longName').val();
+
+        const data = { "shortName": shortName, 'longName': longName }
+        console.log("confirm to create", create_action, data);
+        fetchurl("http://localhost:8080/api/create_studio", data)
       }
+
     }
 
 
+    function update_btn() {
+      var update_action = $('#update-action').find("option:selected").val();
+      console.log("click update", update_action);
 
+      /* show all sections */
+      var x = document.getElementsByClassName("create-div");
+      for (var i = 0; i < x.length; i++) {
+        x[i].style.display = "inline"
+      }
+
+      /* reset input empty */
+      $('.create-div').find('input, textarea').each(function () {
+        $(this).val('');
+      });
+
+      /* set function of confirm button */
+      var y = document.getElementsByClassName("submit-create-update-btn")[0];
+      y.setAttribute('onclick', "update_confirm_btn()");
+
+
+      if (update_action == "event") {
+        $('#create-modal').find('.modal-title').text("Update Event ");
+        $('#create-modal').find('.shortName').hide();
+        $('#create-modal').find('.longName').hide();
+        $('#create-modal').find('.numAccount').hide();
+        $('#create-modal').find('.subscribePrice').hide();
+        $('#create-modal').find('.eventStudio').hide();
+        $('#create-modal').find('.eventType').hide();
+
+
+      } else {  //not event creation
+        $('#create-modal').find('.eventDuration').hide();
+        $('#create-modal').find('.eventStudio').hide();
+        $('#create-modal').find('.eventType').hide();
+        $('#create-modal').find('.eventYear').hide();
+        $('#create-modal').find('.eventName').hide();
+        $('#create-modal').find('.eventFee').hide();
+
+        if (update_action == "demo") {
+          $('#create-modal').find('.modal-title').text("Update Demoographic Group ");
+          $('#create-modal').find('.subscribePrice').hide();
+
+        } else if (update_action == "stream") {
+          $('#create-modal').find('.modal-title').text("Update Stream Service ");
+          $('#create-modal').find('.numAccount').hide();
+
+        }
+      }
+      $('#create-modal').modal();
+    }
+
+
+    function update_confirm_btn() {
+      var update_action = $('#update-action').find("option:selected").val();
+
+      if (update_action == "demo") {
+        var shortName = $('#create-modal').find('#shortName').val();
+        var longName = $('#create-modal').find('#longName').val();
+        var numAccount = $('#create-modal').find('#numAccount').val();
+
+        const data = { "shortName": shortName, 'longName': longName, "numAccount": numAccount }
+        console.log("confirm to update", update_action, data);
+        fetchurl("http://localhost:8080/api/update_demo", data)
+
+      } else if (update_action == "event") {
+        var eventName = $('#create-modal').find('#eventName').val();
+        var eventYear = $('#create-modal').find('#eventYear').val();
+        var eventDuration = $('#create-modal').find('#eventDuration').val();
+        var eventFee = $('#create-modal').find('#eventFee').val();
+
+        const data = {
+          "eventName": eventName, 'eventYear': eventYear,
+          "eventDuration": eventDuration, "eventFee": eventFee
+        }
+        console.log("confirm to update", update_action, data);
+        fetchurl("http://localhost:8080/api/update_event", data)
+
+      } else if (update_action == "stream") {
+        var shortName = $('#create-modal').find('#shortName').val();
+        var longName = $('#create-modal').find('#longName').val();
+        var subscribePrice = $('#create-modal').find('#subscribePrice').val();
+
+        const data = { "shortName": shortName, 'longName': longName, "subscribePrice": subscribePrice }
+        console.log("confirm to update", update_action, data);
+        fetchurl("http://localhost:8080/api/update_stream", data)
+
+      }
+    }
   </script>
 
   <!-- <script type="text/javascript" src="../static/streaming_war.js"></script> -->
