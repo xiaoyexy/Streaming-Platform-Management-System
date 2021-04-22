@@ -7,8 +7,8 @@ const app = new Koa();
 const appid = process.env.APPID
 // const appid=3001
 
-async function doReadFile () {
-    const data = await  fs.readFileSync('stats/index.html');
+async function doReadFile() {
+    const data = await fs.readFileSync('stats/index.html');
     return data;
 }
 

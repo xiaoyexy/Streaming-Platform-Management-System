@@ -98,7 +98,7 @@
     <div class="display"></div>
   </div>
 
-  <!-- create action modal except event-->
+  <!-- create action modal-->
   <div class="modal" id="create-modal" role="dialog">
     <div style="width: 500px" class="modal-dialog modal-md">
       <div class="modal-content">
@@ -191,7 +191,7 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">
             Cancel
           </button>
-          <button type="button" onclick="create_submit_btn()" class="btn btn-default submit-cteate-btn">
+          <button type="button" onclick="create_confirm_btn()" class="btn btn-default submit-cteate-btn">
             Submit
           </button>
         </div>
@@ -207,38 +207,44 @@
   <script>
     fetch("http://localhost:8080/random")
       .then(function (response) {
-        console.log(response);
         return response.json();
       })
-      // .then(data => console.log(data))
-      .then(function (resp) {
-        console.log(resp);
-        document.querySelector("#randomValue").innerHTML = resp.value;
+      .then(function (data) {
+        console.log(data);
+        document.querySelector("#randomValue").innerHTML = data.value;
       })
       .catch(function (error) {
         console.log("Error: " + error);
       });
   </script>
 
-  <script>
-    function fetchurl(url) {
-      fetch(url)
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (resp) {
-          console.log(resp);
 
+  <script>
+    function fetchurl(url, params) {
+      fetch(url, {
+        method: 'POST', // or 'PUT'
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(params),
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert(data.msg)
         })
-        .catch(function (error) {
-          console.log("Error: " + error);
+        .catch((error) => {
+          console.error('Error:', error);
+          alert('Failed!')
         });
 
     }
 
+
     function create_btn() {
       var create_action = $('#create-action').find("option:selected").val();
-      console.log("create_btn", create_action);
+      console.log("click create", create_action);
 
       var x = document.getElementsByClassName("create-div");
       for (var i = 0; i < x.length; i++) {
@@ -278,22 +284,25 @@
     }
 
 
-    function create_submit_btn() {
+    function create_confirm_btn() {
       var create_action = $('#create-action').find("option:selected").val();
+
       if (create_action == "demo") {
         var shortName = $('#create-modal').find('#shortName').val();
         var longName = $('#create-modal').find('#longName').val();
         var numAccount = $('#create-modal').find('#numAccount').val();
-        var command = "create_demo#" + shortName + "_" + longName + "_" + numAccount
-        console.log(command);
-        // var resp = fetchurl("http://localhost:8080/" + command)
+        const data = { "shortName": shortName, 'longName': longName, "numAccount": numAccount }
+        console.log("confirm to create", create_action, data);
+        fetchurl("http://localhost:8080/api/create_demo", data)
 
       }
     }
 
+
+
   </script>
 
-
+  <!-- <script type="text/javascript" src="../static/streaming_war.js"></script> -->
 
 </body>
 
