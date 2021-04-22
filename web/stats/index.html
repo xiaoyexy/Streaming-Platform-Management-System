@@ -31,14 +31,14 @@
   <div class="container">
     <h2>
       Streaming War&nbsp;&nbsp;&nbsp;
-      <button type="button" class="btn btn-info btn-xs active">
+      <button type="button" onclick="stop_btn()" class="btn btn-info btn-xs active">
         Stop Program
       </button>
     </h2>
 
     <h4>
       Oct 2020&nbsp;&nbsp;&nbsp;
-      <button type="button" class="btn btn-info btn-xs active">
+      <button type="button" onclick="switch_month_btn()" class="btn btn-info btn-xs active">
         Switch to Next Month
       </button>
     </h4>
@@ -70,29 +70,29 @@
         <option value="movie">Movie</option>
         <option value="ppv">PPV</option>
       </select>&nbsp;&nbsp;
-      <button type="button" class="btn btn-info btn-xs">Go</button>
+      <button type="button" onclick="offer_btn()" class="btn btn-info btn-xs">Go</button>
     </div>
 
     <div style="padding-top: 10px" id="retract-action">
       <b>Retract Event</b>&nbsp;&nbsp;
-      <button type="button" class="btn btn-info btn-xs">Go</button>
+      <button type="button" onclick="retract_btn()" class="btn btn-info btn-xs">Go</button>
     </div>
 
     <div style="padding-top: 10px" id="watch-action">
       <b>Watch Event</b>&nbsp;&nbsp;&nbsp;
-      <button type="button" class="btn btn-info btn-xs">Go</button>
+      <button type="button" onclick="watch_btn()" class="btn btn-info btn-xs">Go</button>
     </div>
 
     <div style="padding-top: 10px" id="display-action">
       <b>Display</b>
       <select class="select">
         <option value="demo">Demographic group</option>
-        <option value="event">Event (PPV or Movie)</option>
         <option value="stream">Stream Service</option>
         <option value="studio">Studio</option>
-        <option value="offer">Offer</option>
+        <option value="event">All Events (PPV or Movie)</option>
+        <option value="offer">All Offers</option>
       </select>&nbsp;&nbsp;
-      <button type="button" class="btn btn-info btn-xs">Go</button>
+      <button type="button" onclick="display_btn()" class="btn btn-info btn-xs">Go</button>
     </div>
 
     <div class="display-table"></div>
@@ -111,6 +111,30 @@
         </div>
         <div class="modal-body">
           <div class="form-content">
+
+            <div class="info-modal-div streamShortName">
+              <label for="streamShortName" class="gcontrol-label">Stream Service Short Name:</label>
+              <div class="form-content">
+                <textarea type="text" class="form-control" id="streamShortName" name="streamShortName"
+                  style="resize:vertical;max-height:30px; min-height: 20px;"></textarea>
+              </div>
+            </div>
+
+            <div class="info-modal-div groupShortName">
+              <label for="groupShortName" class="gcontrol-label">Demographic Group Short Name:</label>
+              <div class="form-content">
+                <textarea type="text" class="form-control" id="groupShortName" name="groupShortName"
+                  style="resize:vertical;max-height:30px; min-height: 20px;"></textarea>
+              </div>
+            </div>
+
+            <div class="info-modal-div studioShortName">
+              <label for="studioShortName" class="gcontrol-label">Studio Short Name:</label>
+              <div class="form-content">
+                <textarea type="text" class="form-control" id="studioShortName" name="studioShortName"
+                  style="resize:vertical;max-height:30px; min-height: 20px;"></textarea>
+              </div>
+            </div>
 
             <div class="info-modal-div shortName">
               <label for="shortName" class="gcontrol-label">Short Name:</label>
@@ -142,20 +166,20 @@
               </div>
             </div>
 
-            <div class="info-modal-div eventType">
-              <label for="eventType" class="gcontrol-label">Event Type:</label>
-              <select class="form-control" id="eventType" style=" width: 150px;">
-                <option value="ppv">PPV</option>
-                <option value="movie">Movie</option>
-              </select>
-            </div>
-
             <div class="info-modal-div eventName">
               <label for="eventName" class="gcontrol-label">Event Name:</label>
               <div class="form-content">
                 <textarea type="text" class="form-control" id="eventName" name="eventName"
                   style="resize:vertical;max-height:30px; min-height: 20px;"></textarea>
               </div>
+            </div>
+
+            <div class="info-modal-div eventType">
+              <label for="eventType" class="gcontrol-label">Event Type:</label>
+              <select class="form-control" id="eventType" style=" width: 150px;">
+                <option value="ppv">PPV</option>
+                <option value="movie">Movie</option>
+              </select>
             </div>
 
             <div class="info-modal-div eventYear">
@@ -165,7 +189,7 @@
               </div>
             </div>
 
-            <div class="info-modal-div  eventDuration">
+            <div class="info-modal-div eventDuration">
               <label for="eventDuration" class="gcontrol-label">Event Duration:</label>
               <div class="form-content">
                 <input type="number" id="eventDuration" name="eventDuration"></input>
@@ -180,12 +204,27 @@
               </div>
             </div>
 
-            <div class="info-modal-div  eventFee">
-              <label for="eventFee" class="gcontrol-label">Event License Fee:</label>
+            <div class="info-modal-div licenseFee">
+              <label for="licenseFee" class="gcontrol-label">Event License Fee</label>
               <div class="form-content">
-                <input type="number" id="eventFee" name="eventFee"></input>
+                <input type="number" id="licenseFee" name="licenseFee"></input>
               </div>
             </div>
+
+            <div class="info-modal-div viewingPrice">
+              <label for="viewingPrice" class="gcontrol-label">Event Viewing Fee on the Streaming Service</label>
+              <div class="form-content">
+                <input type="number" id="viewingPrice" name="viewingPrice"></input>
+              </div>
+            </div>
+
+            <div class="info-modal-div watchPercentage">
+              <label for="watchPercentage" class="gcontrol-label">%group watch the event</label>
+              <div class="form-content">
+                <input type="number" id="watchPercentage" name="watchPercentage"></input> (e.g. 20 => 20/100)
+              </div>
+            </div>
+
           </div>
         </div>
         <div class="modal-footer">
@@ -251,11 +290,40 @@
 
     }
 
+    function fetchurl_with_results(url, params) {
+      for (var key in params) {
+        var value = params[key];
+        if (value == "") {
+          alert("Please enter parameters!")
+          return;
+        }
+      }
 
-    function create_btn() {
-      var create_action = $('#create-action').find("option:selected").val();
-      console.log("click create", create_action);
+      fetch(url, {
+        method: 'POST', // or 'PUT'
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(params),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.msg == "success") {
+            /* do something here -- display */
+          } else {
+            alert(data.msg)
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          alert('Failed!')
+        });
+    }
 
+
+    function reset_modal_info(submit_btn_name) {
       /* hide all sections */
       var x = document.getElementsByClassName("info-modal-div");
       for (var i = 0; i < x.length; i++) {
@@ -269,8 +337,14 @@
 
       /* set function of confirm button */
       var y = document.getElementsByClassName("submit-confirm-btn")[0];
-      y.setAttribute('onclick', "create_confirm_btn()");
+      y.setAttribute('onclick', submit_btn_name);
+    }
 
+
+    function create_btn() {
+      var create_action = $('#create-action').find("option:selected").val();
+      reset_modal_info("create_confirm_btn()")
+      console.log("click create", create_action);
 
       if (create_action == "event") {
         $('#info-modal').find('.modal-title').text("Create Event ");
@@ -279,7 +353,7 @@
         $('#info-modal').find('.eventType').show();
         $('#info-modal').find('.eventYear').show();
         $('#info-modal').find('.eventName').show();
-        $('#info-modal').find('.eventFee').show();
+        $('#info-modal').find('.licenseFee').show();
 
       } else if (create_action == "demo") {
         $('#info-modal').find('.modal-title').text("Create Demographic Group ");
@@ -321,11 +395,11 @@
         var eventType = $('#info-modal').find('#eventType').val();
         var eventDuration = $('#info-modal').find('#eventDuration').val();
         var eventStudio = $('#info-modal').find('#eventStudio').val();
-        var eventFee = $('#info-modal').find('#eventFee').val();
+        var licenseFee = $('#info-modal').find('#licenseFee').val();
 
         const data = {
           "eventName": eventName, 'eventYear': eventYear, "eventType": eventType,
-          "eventDuration": eventDuration, 'eventStudio': eventStudio, "eventFee": eventFee
+          "eventDuration": eventDuration, 'eventStudio': eventStudio, "licenseFee": licenseFee
         }
         console.log("confirm to create", create_action, data);
         fetchurl("http://localhost:8080/api/create_event", data)
@@ -353,30 +427,15 @@
 
     function update_btn() {
       var update_action = $('#update-action').find("option:selected").val();
+      reset_modal_info("update_confirm_btn()");
       console.log("click update", update_action);
-
-      /* show all sections */
-      var x = document.getElementsByClassName("info-modal-div");
-      for (var i = 0; i < x.length; i++) {
-        x[i].style.display = "none"
-      }
-
-      /* reset input empty */
-      $('.info-modal-div').find('input, textarea').each(function () {
-        $(this).val('');
-      });
-
-      /* set function of confirm button */
-      var y = document.getElementsByClassName("submit-confirm-btn")[0];
-      y.setAttribute('onclick', "update_confirm_btn()");
-
 
       if (update_action == "event") {
         $('#info-modal').find('.modal-title').text("Update Event ");
         $('#info-modal').find('.eventDuration').show();
         $('#info-modal').find('.eventYear').show();
         $('#info-modal').find('.eventName').show();
-        $('#info-modal').find('.eventFee').show();
+        $('#info-modal').find('.licenseFee').show();
 
       } else if (update_action == "demo") {
         $('#info-modal').find('.modal-title').text("Update Demographic Group ");
@@ -411,11 +470,11 @@
         var eventName = $('#info-modal').find('#eventName').val();
         var eventYear = $('#info-modal').find('#eventYear').val();
         var eventDuration = $('#info-modal').find('#eventDuration').val();
-        var eventFee = $('#info-modal').find('#eventFee').val();
+        var licenseFee = $('#info-modal').find('#licenseFee').val();
 
         const data = {
           "eventName": eventName, 'eventYear': eventYear,
-          "eventDuration": eventDuration, "eventFee": eventFee
+          "eventDuration": eventDuration, "licenseFee": licenseFee
         }
         console.log("confirm to update", update_action, data);
         fetchurl("http://localhost:8080/api/update_event", data)
@@ -431,6 +490,185 @@
       }
     }
 
+
+    function offer_btn() {
+      var offer_action = $('#offer-action').find("option:selected").val();
+      reset_modal_info("offer_confirm_btn()");
+      console.log("click offer", offer_action);
+
+      if (offer_action == "ppv") {
+        $('#info-modal').find('.modal-title').text("Offer PPV on specific streaming service ");
+        $('#info-modal').find('.streamShortName').show();
+        $('#info-modal').find('.eventYear').show();
+        $('#info-modal').find('.eventName').show();
+        $('#info-modal').find('.viewingPrice').show();
+
+      } else if (offer_action == "movie") {
+        $('#info-modal').find('.modal-title').text("Offer movie on specific streaming service ");
+        $('#info-modal').find('.streamShortName').show();
+        $('#info-modal').find('.eventYear').show();
+        $('#info-modal').find('.eventName').show();
+      }
+
+      $('#info-modal').modal();
+    }
+
+
+    function offer_confirm_btn() {
+      var offer_action = $('#offer-action').find("option:selected").val();
+
+      if (offer_action == "ppv") {
+        var streamShortName = $('#info-modal').find('#streamShortName').val();
+        var eventYear = $('#info-modal').find('#eventYear').val();
+        var eventName = $('#info-modal').find('#eventName').val();
+        var viewingPrice = $('#info-modal').find('#viewingPrice').val();
+
+        const data = {
+          "streamShortName": streamShortName, 'eventYear': eventYear,
+          "eventName": eventName, "viewingPrice": viewingPrice
+        }
+        console.log("confirm to offer", offer_action, data);
+        fetchurl("http://localhost:8080/api/offer_ppv", data)
+
+      } else if (offer_action == "movie") {
+        var streamShortName = $('#info-modal').find('#streamShortName').val();
+        var eventYear = $('#info-modal').find('#eventYear').val();
+        var eventName = $('#info-modal').find('#eventName').val();
+
+        const data = { "streamShortName": streamShortName, 'eventYear': eventYear, "eventName": eventName }
+        console.log("confirm to offer", offer_action, data);
+        fetchurl("http://localhost:8080/api/offer_movie", data)
+      }
+    }
+
+
+    function retract_btn() {
+      reset_modal_info("retract_confirm_btn()");
+      console.log("click retract event");
+      $('#info-modal').find('.modal-title').text("Retract event from specific streaming service ");
+      $('#info-modal').find('.streamShortName').show();
+      $('#info-modal').find('.eventYear').show();
+      $('#info-modal').find('.eventName').show();
+      $('#info-modal').modal();
+    }
+
+    function retract_confirm_btn() {
+      var streamShortName = $('#info-modal').find('#streamShortName').val();
+      var eventYear = $('#info-modal').find('#eventYear').val();
+      var eventName = $('#info-modal').find('#eventName').val();
+
+      const data = { "streamShortName": streamShortName, 'eventYear': eventYear, "eventName": eventName }
+      console.log("confirm to retract event", data);
+      fetchurl("http://localhost:8080/api/retract_movie", data)
+    }
+
+    function watch_btn() {
+      reset_modal_info("watch_confirm_btn()");
+      console.log("click watch event");
+      $('#info-modal').find('.modal-title').text("Watch event on specific streaming service ");
+      $('#info-modal').find('.streamShortName').show();
+      $('#info-modal').find('.groupShortName').show();
+      $('#info-modal').find('.eventYear').show();
+      $('#info-modal').find('.eventName').show();
+      $('#info-modal').find('.watchPercentage').show();
+      $('#info-modal').modal();
+    }
+
+    function watch_confirm_btn() {
+      var streamShortName = $('#info-modal').find('#streamShortName').val();
+      var groupShortName = $('#info-modal').find('#groupShortName').val();
+      var eventName = $('#info-modal').find('#eventName').val();
+      var eventYear = $('#info-modal').find('#eventYear').val();
+      var watchPercentage = $('#info-modal').find('#watchPercentage').val();
+
+      const data = {
+        "streamShortName": streamShortName, 'groupShortName': groupShortName,
+        'eventYear': eventYear, "eventName": eventName,
+        'watchPercentage': watchPercentage
+      }
+      console.log("confirm to watch event", data);
+      fetchurl("http://localhost:8080/api/watch_event", data)
+    }
+
+    function display_btn() {
+      var display_action = $('#display-action').find("option:selected").val();
+      reset_modal_info("display_confirm_btn()");
+      console.log("click display", display_action);
+
+      if (display_action == "event") {
+        $('#info-modal').find('.modal-title').text("Display All Events ");
+        // display_all_events();
+        return;
+
+      } else if (display_action == "offer") {
+        $('#info-modal').find('.modal-title').text("Display All Offers ");
+        // display_all_offers();
+        return;
+
+      } else if (display_action == "demo") {
+        $('#info-modal').find('.modal-title').text("Display Demographic Group ");
+        $('#info-modal').find('.groupShortName').show();
+
+      } else if (display_action == "stream") {
+        $('#info-modal').find('.modal-title').text("Display Stream Service ");
+        $('#info-modal').find('.streamShortName').show();
+
+      } else if (display_action == "studio") {
+        $('#info-modal').find('.modal-title').text("Display Studio ");
+        $('#info-modal').find('.studioShortName').show();
+      }
+
+      $('#info-modal').modal();
+    }
+
+    function display_confirm_btn() {
+      var display_action = $('#display-action').find("option:selected").val();
+
+      if (display_action == "demo") {
+        var groupShortName = $('#info-modal').find('#groupShortName').val();
+        const data = { "groupShortName": groupShortName }
+        console.log("confirm to display", display_action, data);
+        fetchurl_with_results("http://localhost:8080/api/display_demo", data)
+
+      } else if (display_action == "stream") {
+        var streamShortName = $('#info-modal').find('#streamShortName').val();
+        const data = { "streamShortName": streamShortName }
+        console.log("confirm to display", display_action, data);
+        fetchurl_with_results("http://localhost:8080/api/display_stream", data)
+
+      } else if (display_action == "studio") {
+        var studioShortName = $('#info-modal').find('#studioShortName').val();
+        const data = { "studioShortName": studioShortName }
+        console.log("confirm to display", display_action, data);
+        fetchurl_with_results("http://localhost:8080/api/display_studio", data)
+      }
+    }
+
+    function stop_btn() {
+      reset_modal_info("stop_confirm_btn()");
+      console.log("click stop");
+      $('#info-modal').find('.modal-title').text("Are you sure to stop the program? ");
+      $('#info-modal').modal();
+    }
+
+    function stop_confirm_btn() {
+      console.log("confirm to stop");
+      fetchurl("http://localhost:8080/api/stop", {})
+      window.location.reload();
+    }
+
+    function switch_month_btn() {
+      reset_modal_info("switch_month_confirm_btn()");
+      console.log("click switch month");
+      $('#info-modal').find('.modal-title').text("Are you sure to switch the month? ");
+      $('#info-modal').modal();
+    }
+
+    function switch_month_confirm_btn() {
+      console.log("confirm to switch month");
+      fetchurl("http://localhost:8080/api/next_month", {})
+      window.location.reload();
+    }
 
   </script>
 
