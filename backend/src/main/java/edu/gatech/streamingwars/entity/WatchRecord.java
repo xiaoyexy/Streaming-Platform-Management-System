@@ -24,7 +24,7 @@ public class WatchRecord {
     @Column(name="show_year")
     private Integer showYear;
 
-    @Column(name="straming_service_short_name")
+    @Column(name="streaming_service_short_name")
     private String streamingServiceShortName;
 
     @Column(name="year_month")
@@ -32,6 +32,9 @@ public class WatchRecord {
 
     @Column(name="watch_price")
     private Integer watchPrice;
+
+    @Column(name="demongraphic_group_num_of_account")
+    private Integer demongraphicGroupNumOfAccount;
 
     @Override
     public String toString() {
@@ -43,7 +46,16 @@ public class WatchRecord {
                 ", streamingServiceShortName='" + streamingServiceShortName + '\'' +
                 ", yearMonth='" + yearMonth + '\'' +
                 ", watchPrice=" + watchPrice +
+                ", demongraphicGroupNumOfAccount=" + demongraphicGroupNumOfAccount +
                 '}';
+    }
+
+    public Integer getPercentageOfAccount() {
+        return percentageOfAccount;
+    }
+
+    public void setPercentageOfAccount(Integer percentageOfAccount) {
+        this.percentageOfAccount = percentageOfAccount;
     }
 
     public String getDemographicGroupShortName() {
@@ -94,18 +106,18 @@ public class WatchRecord {
         this.watchPrice = watchPrice;
     }
 
-    public Integer getPercentageOfAccount() {
-        return percentageOfAccount;
+    public Integer getDemongraphicGroupNumOfAccount() {
+        return demongraphicGroupNumOfAccount;
     }
 
-    public void setPercentageOfAccount(Integer percentageOfAccount) {
-        this.percentageOfAccount = percentageOfAccount;
+    public void setDemongraphicGroupNumOfAccount(Integer demongraphicGroupNumOfAccount) {
+        this.demongraphicGroupNumOfAccount = demongraphicGroupNumOfAccount;
     }
 
     public WatchRecord() {
     }
 
-    public WatchRecord(Integer percentageOfAccount, String demographicGroupShortName, String showShortName, Integer showYear, String streamingServiceShortName, String yearMonth, Integer watchPrice) {
+    public WatchRecord(Integer percentageOfAccount, String demographicGroupShortName, String showShortName, Integer showYear, String streamingServiceShortName, String yearMonth, Integer watchPrice, Integer demongraphicGroupNumOfAccount) {
         this.percentageOfAccount = percentageOfAccount;
         this.demographicGroupShortName = demographicGroupShortName;
         this.showShortName = showShortName;
@@ -113,5 +125,6 @@ public class WatchRecord {
         this.streamingServiceShortName = streamingServiceShortName;
         this.yearMonth = yearMonth;
         this.watchPrice = watchPrice;
+        this.demongraphicGroupNumOfAccount = demongraphicGroupNumOfAccount;
     }
 }

@@ -18,6 +18,9 @@ public class WatchRecordId implements Serializable {
                 Objects.equals(getShowYear(), that.getShowYear());
     }
 
+    public WatchRecordId() {
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(getDemographicGroupShortName(), getShowShortName(), getShowYear());

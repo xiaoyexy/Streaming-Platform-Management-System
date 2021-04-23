@@ -7,6 +7,9 @@ public class ShowId implements Serializable {
     private String shortName;
     private Integer year;
 
+    public ShowId() {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
