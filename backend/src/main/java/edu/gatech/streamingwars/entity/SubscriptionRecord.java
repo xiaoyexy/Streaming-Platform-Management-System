@@ -26,13 +26,24 @@ public class SubscriptionRecord {
     @Column(name="percentage")
     private Integer percentage;
 
+    @Column(name="subscription_fee")
+    private Integer subscriptionFee;
+
+    @Column(name="demongraphic_group_num_of_account")
+    private Integer demongraphicGroupNumOfAccount;
+
+    public SubscriptionRecord() {
+    }
+
     @Override
     public String toString() {
         return "SubscriptionRecord{" +
                 "demographicGroupShortName='" + demographicGroupShortName + '\'' +
-                ", streamingServiceShortName=" + streamingServiceShortName +
+                ", streamingServiceShortName='" + streamingServiceShortName + '\'' +
                 ", yearMonth='" + yearMonth + '\'' +
                 ", percentage=" + percentage +
+                ", subscriptionFee=" + subscriptionFee +
+                ", demongraphicGroupNumOfAccount=" + demongraphicGroupNumOfAccount +
                 '}';
     }
 
@@ -44,6 +55,13 @@ public class SubscriptionRecord {
         this.demographicGroupShortName = demographicGroupShortName;
     }
 
+    public String getStreamingServiceShortName() {
+        return streamingServiceShortName;
+    }
+
+    public void setStreamingServiceShortName(String streamingServiceShortName) {
+        this.streamingServiceShortName = streamingServiceShortName;
+    }
 
     public String getYearMonth() {
         return yearMonth;
@@ -61,21 +79,28 @@ public class SubscriptionRecord {
         this.percentage = percentage;
     }
 
-    public SubscriptionRecord() {
+    public Integer getSubscriptionFee() {
+        return subscriptionFee;
     }
 
-    public String getStreamingServiceShortName() {
-        return streamingServiceShortName;
+    public void setSubscriptionFee(Integer subscriptionFee) {
+        this.subscriptionFee = subscriptionFee;
     }
 
-    public void setStreamingServiceShortName(String streamingServiceShortName) {
-        this.streamingServiceShortName = streamingServiceShortName;
+    public Integer getDemongraphicGroupNumOfAccount() {
+        return demongraphicGroupNumOfAccount;
     }
 
-    public SubscriptionRecord(String demographicGroupShortName, String streamingServiceShortName, String yearMonth, Integer percentage) {
+    public void setDemongraphicGroupNumOfAccount(Integer demongraphicGroupNumOfAccount) {
+        this.demongraphicGroupNumOfAccount = demongraphicGroupNumOfAccount;
+    }
+
+    public SubscriptionRecord(String demographicGroupShortName, String streamingServiceShortName, String yearMonth, Integer percentage, Integer subscriptionFee, Integer demongraphicGroupNumOfAccount) {
         this.demographicGroupShortName = demographicGroupShortName;
         this.streamingServiceShortName = streamingServiceShortName;
         this.yearMonth = yearMonth;
         this.percentage = percentage;
+        this.subscriptionFee = subscriptionFee;
+        this.demongraphicGroupNumOfAccount = demongraphicGroupNumOfAccount;
     }
 }

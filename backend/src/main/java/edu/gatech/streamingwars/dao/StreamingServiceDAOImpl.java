@@ -1,11 +1,16 @@
 package edu.gatech.streamingwars.dao;
 
+import edu.gatech.streamingwars.entity.ShowLicenseRecord;
 import edu.gatech.streamingwars.entity.StreamingService;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
+@Repository
 public class StreamingServiceDAOImpl implements StreamingServiceDAO{
     private EntityManager entityManager;
 
@@ -16,7 +21,18 @@ public class StreamingServiceDAOImpl implements StreamingServiceDAO{
 
     @Override
     public List<StreamingService> findAll() {
-        return null;
+
+        Session currentSession = entityManager.unwrap(Session.class);
+        // create a query
+        Query<StreamingService> qry =
+                currentSession.createQuery("FROM StreamingService s " +
+                        "ORDER BY s.shortName", StreamingService.class);
+
+        // execute query and get result list
+        List<StreamingService> streamingServices = qry.getResultList();
+
+        // return the results
+        return streamingServices;
     }
 
     @Override
@@ -26,6 +42,7 @@ public class StreamingServiceDAOImpl implements StreamingServiceDAO{
 
     @Override
     public void save(StreamingService streamingService) {
-
+        Session currentSession = entityManager.unwrap(Session.class);
+        currentSession.save(streamingService);
     }
 }

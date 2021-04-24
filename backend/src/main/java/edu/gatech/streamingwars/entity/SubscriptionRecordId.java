@@ -18,6 +18,9 @@ public class SubscriptionRecordId implements Serializable {
                 Objects.equals(getYearMonth(), that.getYearMonth());
     }
 
+    public SubscriptionRecordId() {
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(getDemographicGroupShortName(), getStreamingServiceShortName(), getYearMonth());

@@ -7,6 +7,7 @@ public class ShowLicenseRecordId implements Serializable {
     private String streamingServiceShortName;
     private String showShortName;
     private Integer showYear;
+    private String yearMonth;
 
     @Override
     public boolean equals(Object o) {
@@ -15,12 +16,23 @@ public class ShowLicenseRecordId implements Serializable {
         ShowLicenseRecordId that = (ShowLicenseRecordId) o;
         return Objects.equals(getStreamingServiceShortName(), that.getStreamingServiceShortName()) &&
                 Objects.equals(getShowShortName(), that.getShowShortName()) &&
-                Objects.equals(getShowYear(), that.getShowYear());
+                Objects.equals(getShowYear(), that.getShowYear()) &&
+                Objects.equals(getYearMonth(), that.getYearMonth());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getStreamingServiceShortName(), getShowShortName(), getShowYear());
+        return Objects.hash(getStreamingServiceShortName(), getShowShortName(), getShowYear(), getYearMonth());
+    }
+
+    @Override
+    public String toString() {
+        return "ShowLicenseRecordId{" +
+                "streamingServiceShortName='" + streamingServiceShortName + '\'' +
+                ", showShortName='" + showShortName + '\'' +
+                ", showYear=" + showYear +
+                ", yearMonth='" + yearMonth + '\'' +
+                '}';
     }
 
     public String getStreamingServiceShortName() {
@@ -47,9 +59,21 @@ public class ShowLicenseRecordId implements Serializable {
         this.showYear = showYear;
     }
 
-    public ShowLicenseRecordId(String streamingServiceShortName, String showShortName, Integer showYear) {
+    public String getYearMonth() {
+        return yearMonth;
+    }
+
+    public void setYearMonth(String yearMonth) {
+        this.yearMonth = yearMonth;
+    }
+
+    public ShowLicenseRecordId() {
+    }
+
+    public ShowLicenseRecordId(String streamingServiceShortName, String showShortName, Integer showYear, String yearMonth) {
         this.streamingServiceShortName = streamingServiceShortName;
         this.showShortName = showShortName;
         this.showYear = showYear;
+        this.yearMonth = yearMonth;
     }
 }
