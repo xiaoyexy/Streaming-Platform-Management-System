@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+// @CrossOrigin(origins = "http://localhost:3000")
 public class ApiController {
     private ShowLicenseManagementSystem showLicenseManagementSystem;
     private StreamingServiceSystem streamingServiceSystem;
