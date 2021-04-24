@@ -16,7 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @SpringBootApplication
 @ComponentScan({"edu.gatech.streamingwars"})
-@CrossOrigin(origins = "http://localhost:3000")
+// @CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class StreamingwarsApplication {
 
     // NOTE: autowired is a special annotation provided by the spring framework 
