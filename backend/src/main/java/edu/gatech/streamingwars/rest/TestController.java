@@ -4,17 +4,18 @@ import edu.gatech.streamingwars.dao.*;
 import edu.gatech.streamingwars.entity.*;
 import edu.gatech.streamingwars.service.ShowLicenseManagementSystem;
 import edu.gatech.streamingwars.service.StreamingServiceSystem;
+
 import org.aspectj.weaver.ast.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class TestController {
     private DemographicGroupDAO demographicGroupDAO;
+
+    private UsersDAO usersDAO;
     private ShowDAO showDAO;
     private ShowLicenseRecordDAO showLicenseRecordDAO;
     private StreamingServiceDAO streamingServiceDAO;
@@ -24,7 +25,7 @@ public class TestController {
     private StreamingServiceSystem streamingServiceSystem;
     private ShowLicenseManagementSystem showLicenseManagementSystem;
 
-    public TestController(DemographicGroupDAO demographicGroupDAO, ShowDAO showDAO, ShowLicenseRecordDAO showLicenseRecordDAO, StreamingServiceDAO streamingServiceDAO, StudioDAO studioDAO, SubscriptionRecordDAO subscriptionRecordDAO, WatchRecordDAO watchRecordDAO, StreamingServiceSystem streamingServiceSystem, ShowLicenseManagementSystem showLicenseManagementSystem) {
+    public TestController(DemographicGroupDAO demographicGroupDAO, ShowDAO showDAO, ShowLicenseRecordDAO showLicenseRecordDAO, StreamingServiceDAO streamingServiceDAO, StudioDAO studioDAO, SubscriptionRecordDAO subscriptionRecordDAO, WatchRecordDAO watchRecordDAO, StreamingServiceSystem streamingServiceSystem, ShowLicenseManagementSystem showLicenseManagementSystem,UsersDAO usersDAO) {
         this.demographicGroupDAO = demographicGroupDAO;
         this.showDAO = showDAO;
         this.showLicenseRecordDAO = showLicenseRecordDAO;
@@ -34,6 +35,7 @@ public class TestController {
         this.watchRecordDAO = watchRecordDAO;
         this.streamingServiceSystem = streamingServiceSystem;
         this.showLicenseManagementSystem = showLicenseManagementSystem;
+        this.usersDAO=usersDAO;
     }
 
     @GetMapping("/list_demographic_group")
@@ -46,6 +48,11 @@ public class TestController {
         DemographicGroup demographicGroup = demographicGroupDAO.findById(shortName);
         return demographicGroup;
     }
+
+    @PostMapping(path="/users/authenticate", consumes="application/json", produces="application/json")
+    public List<User> authenticate(@RequestBody User user) {
+        System.out.println(user);
+        return usersDAO.authenticate(user.getUsername(),user.getPassword());}
 
     @GetMapping("/list_show")
     public List<Show> listShow() {
