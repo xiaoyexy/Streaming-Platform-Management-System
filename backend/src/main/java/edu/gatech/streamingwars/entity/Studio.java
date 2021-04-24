@@ -15,19 +15,7 @@ public class Studio {
     @Column(name="long_name")
     private String longName;
 
-    @Column(name="studio_name")
-    private String studioName;
-
     public Studio() {
-    }
-
-    @Override
-    public String toString() {
-        return "Studio{" +
-                "shortName='" + shortName + '\'' +
-                ", longName='" + longName + '\'' +
-                ", studioName='" + studioName + '\'' +
-                '}';
     }
 
     public String getShortName() {
@@ -46,17 +34,8 @@ public class Studio {
         this.longName = longName;
     }
 
-    public String getStudioName() {
-        return studioName;
-    }
-
-    public void setStudioName(String studioName) {
-        this.studioName = studioName;
-    }
-
-    public Studio(String shortName, String longName, String studioName) {
+    public Studio(String shortName, String longName) {
         this.shortName = shortName;
         this.longName = longName;
-        this.studioName = studioName;
     }
 }

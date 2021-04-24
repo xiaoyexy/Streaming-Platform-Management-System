@@ -21,8 +21,8 @@ public class Show {
     @Column(name="show_type")
     private String showType;
 
-    @Column(name="price")
-    private Integer price;
+    @Column(name="license_fee")
+    private Integer licenseFee;
 
     @Column(name="studio_name")
     private String studioName;
@@ -34,7 +34,7 @@ public class Show {
                 ", year=" + year +
                 ", duration=" + duration +
                 ", showType='" + showType + '\'' +
-                ", price=" + price +
+                ", licenseFee=" + licenseFee +
                 ", studioName='" + studioName + '\'' +
                 '}';
     }
@@ -71,12 +71,12 @@ public class Show {
         this.showType = showType;
     }
 
-    public Integer getPrice() {
-        return price;
+    public Integer getLicenseFee() {
+        return licenseFee;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public void setLicenseFee(Integer licenseFee) {
+        this.licenseFee = licenseFee;
     }
 
     public String getStudioName() {
@@ -90,12 +90,12 @@ public class Show {
     public Show() {
     }
 
-    public Show(String shortName, Integer year, Integer duration, String showType, Integer price, String studioName) {
+    public Show(String shortName, Integer year, Integer duration, String showType, Integer licenseFee, String studioName) {
         this.shortName = shortName;
         this.year = year;
         this.duration = duration;
         this.showType = showType;
-        this.price = price;
+        this.licenseFee = licenseFee;
         this.studioName = studioName;
     }
 }
