@@ -95,7 +95,8 @@
       <button type="button" onclick="display_btn()" class="btn btn-info btn-xs">Go</button>
     </div>
 
-    <div class="display-table"></div>
+    <br><br>
+    <div id="displayArea"></div>
   </div>
 
 
@@ -271,26 +272,30 @@
       }
 
       fetch(url, {
-        method: 'POST', // or 'PUT'
-        mode: 'cors',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8'
-        },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json;charset=utf-8' },
         body: JSON.stringify(params),
-      })
-        .then(response => response.json())
-        .then(data => {
-          alert(data.msg)
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-          alert('Failed!')
-        });
 
+      }).then(function (response) {
+        console.log(url, response.status);
+        if (response.status == 200) {
+          alert("Success!")
+          return { 'result': "Success!" };
+        } else {
+          alert('Failed!')
+          return response.json();
+        }
+      }).then(data => {
+        console.log(data);
+
+      }).catch((error) => {
+        console.error('Error:', error);
+        alert('Failed!');
+      });
     }
 
-    function fetchurl_with_results(url, params) {
+    function fetchurl_for_display(url, params) {
+      // for display action only
       for (var key in params) {
         var value = params[key];
         if (value == "") {
@@ -299,27 +304,36 @@
         }
       }
 
-      fetch(url, {
-        method: 'POST', // or 'PUT'
-        mode: 'cors',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(params),
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.msg == "success") {
-            /* do something here -- display */
-          } else {
-            alert(data.msg)
-          }
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-          alert('Failed!')
-        });
+      if (params!="") {
+        var setting = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json;charset=utf-8' },
+          body: JSON.stringify(params),
+        }
+      } else {
+        var setting = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json;charset=utf-8' },
+        }
+      }
+
+      fetch(url, setting).then(function (response) {
+        console.log(url, response.status);
+        if (response.status == 200) {
+          return response.text();
+        } else {
+          return "Not exist";
+        }
+
+      }).then(data => {
+        data = data.replaceAll("\n", "<br>")
+        console.log(data);
+        document.querySelector("#displayArea").innerHTML = data;
+
+      }).catch((error) => {
+        console.error('Error:', error);
+        alert('Failed!');
+      });
     }
 
 
@@ -385,7 +399,7 @@
         var longName = $('#info-modal').find('#longName').val();
         var numAccount = $('#info-modal').find('#numAccount').val();
 
-        const data = { "shortName": shortName, 'longName': longName, "numAccount": numAccount }
+        const data = { "shortName": shortName, 'longName': longName, "numberOfAccounts": numAccount }
         console.log("confirm to create", create_action, data);
         fetchurl("http://localhost:8080/api/create_demo", data)
 
@@ -421,6 +435,7 @@
         console.log("confirm to create", create_action, data);
         fetchurl("http://localhost:8080/api/create_studio", data)
       }
+      $('#info-modal').modal('hide');
 
     }
 
@@ -462,7 +477,7 @@
         var longName = $('#info-modal').find('#longName').val();
         var numAccount = $('#info-modal').find('#numAccount').val();
 
-        const data = { "shortName": shortName, 'longName': longName, "numAccount": numAccount }
+        const data = { "shortName": shortName, 'longName': longName, "numberOfAccounts": numAccount }
         console.log("confirm to update", update_action, data);
         fetchurl("http://localhost:8080/api/update_demo", data)
 
@@ -488,6 +503,7 @@
         console.log("confirm to update", update_action, data);
         fetchurl("http://localhost:8080/api/update_stream", data)
       }
+      $('#info-modal').modal('hide');
     }
 
 
@@ -539,6 +555,7 @@
         console.log("confirm to offer", offer_action, data);
         fetchurl("http://localhost:8080/api/offer_movie", data)
       }
+      $('#info-modal').modal('hide');
     }
 
 
@@ -560,6 +577,7 @@
       const data = { "streamShortName": streamShortName, 'eventYear': eventYear, "eventName": eventName }
       console.log("confirm to retract event", data);
       fetchurl("http://localhost:8080/api/retract_movie", data)
+      $('#info-modal').modal('hide');
     }
 
     function watch_btn() {
@@ -588,6 +606,7 @@
       }
       console.log("confirm to watch event", data);
       fetchurl("http://localhost:8080/api/watch_event", data)
+      $('#info-modal').modal('hide');
     }
 
     function display_btn() {
@@ -597,12 +616,12 @@
 
       if (display_action == "event") {
         $('#info-modal').find('.modal-title').text("Display All Events ");
-        // display_all_events();
+        fetchurl_for_display("http://localhost:8080/api/display_events", "")
         return;
 
       } else if (display_action == "offer") {
         $('#info-modal').find('.modal-title').text("Display All Offers ");
-        // display_all_offers();
+        fetchurl_for_display("http://localhost:8080/api/display_offers", "")
         return;
 
       } else if (display_action == "demo") {
@@ -626,22 +645,23 @@
 
       if (display_action == "demo") {
         var groupShortName = $('#info-modal').find('#groupShortName').val();
-        const data = { "groupShortName": groupShortName }
+        const data = { "shortName": groupShortName }
         console.log("confirm to display", display_action, data);
-        fetchurl_with_results("http://localhost:8080/api/display_demo", data)
+        fetchurl_for_display("http://localhost:8080/api/display_demo", data)
 
       } else if (display_action == "stream") {
         var streamShortName = $('#info-modal').find('#streamShortName').val();
-        const data = { "streamShortName": streamShortName }
+        const data = { "shortName": streamShortName }
         console.log("confirm to display", display_action, data);
-        fetchurl_with_results("http://localhost:8080/api/display_stream", data)
+        fetchurl_for_display("http://localhost:8080/api/display_stream", data)
 
       } else if (display_action == "studio") {
         var studioShortName = $('#info-modal').find('#studioShortName').val();
-        const data = { "studioShortName": studioShortName }
+        const data = { "shortName": studioShortName }
         console.log("confirm to display", display_action, data);
-        fetchurl_with_results("http://localhost:8080/api/display_studio", data)
+        fetchurl_for_display("http://localhost:8080/api/display_studio", data)
       }
+      $('#info-modal').modal('hide');
     }
 
     function stop_btn() {
