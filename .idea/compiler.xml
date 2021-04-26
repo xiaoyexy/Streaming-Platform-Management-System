@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="streamingwars" target="15" />
+      <module name="streamingwars" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

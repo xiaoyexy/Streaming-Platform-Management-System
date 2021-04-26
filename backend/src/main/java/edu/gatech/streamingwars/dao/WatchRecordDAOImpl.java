@@ -110,7 +110,7 @@ public class WatchRecordDAOImpl implements WatchRecordDAO{
         Session currentSession = entityManager.unwrap(Session.class);
         Query<WatchRecord> qry =
                 currentSession.createQuery("FROM WatchRecord s " +
-                        "WHERE s.showShortName =:showShortName and s.showYear =:showYear and s.yearMonth =:yearMonth" +
+                        "WHERE s.showShortName =:showShortName and s.showYear =:showYear and s.yearMonth =:yearMonth " +
                         "ORDER BY s.demographicGroupShortName, s.showShortName, s.showYear", WatchRecord.class);
 
         qry.setParameter("showShortName", showShortName);
@@ -125,7 +125,7 @@ public class WatchRecordDAOImpl implements WatchRecordDAO{
         Session currentSession = entityManager.unwrap(Session.class);
         Query<WatchRecord> qry =
                 currentSession.createQuery("FROM WatchRecord s " +
-                        "WHERE s.streamingServiceShortName =:streamingServiceShortName and s.showShortName =:showShortName and s.showYear =:showYear and s.yearMonth =:yearMonth" +
+                        "WHERE s.streamingServiceShortName =:streamingServiceShortName and s.showShortName =:showShortName and s.showYear =:showYear and s.yearMonth =:yearMonth " +
                         "ORDER BY s.demographicGroupShortName, s.showShortName, s.showYear", WatchRecord.class);
 
         qry.setParameter("streamingServiceShortName", streamingServiceShortName);

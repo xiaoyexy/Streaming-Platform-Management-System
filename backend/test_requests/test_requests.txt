@@ -1,0 +1,106 @@
+## Demo and test requests
+
+#1
+http://localhost:8080/api/create_demo
+{"shortName":"age_40_50", "longName":"Viewers between 40 and 50", "numberOfAccounts":"800"}
+
+
+#2 http://localhost:8080/api/create_studio
+{"shortName":"disney", "longName":"Walt Disney Animation Studios"}
+{"shortName":"espn", "longName":"Entertainment Sports Network Studios"}
+
+#3 http://localhost:8080/api/create_event
+{"eventName": "Mulan", "eventYear": "1998", "eventType": "movie",
+ "eventDuration": "88", "eventStudio": "disney", "licenseFee": "1000"}
+
+{"eventName": "30 for 30: Monaco", "eventYear": "2020", "eventType": "ppv",
+ "eventDuration": "106", "eventStudio": "espn", "licenseFee": "3300"}
+
+#4 http://localhost:8080/api/create_stream
+{ "shortName": "apv", "longName": "Amazon Prime Video", "subscribePrice": "12" }
+{ "shortName": "net", "longName": "Netflix", "subscribePrice": "14" }
+
+#5 http://localhost:8080/api/offer_movie
+{ "streamShortName": "apv", "eventYear": "1998", "eventName": "Mulan" }
+
+#6 http://localhost:8080/api/offer_ppv
+{
+          "streamShortName": "net", "eventYear": "2020",
+          "eventName": "30 for 30: Monaco", "viewingPrice": "57"
+        }
+
+#7 http://localhost:8080/api/watch_event
+{
+       "streamShortName": "apv", "groupShortName": "age_40_50",
+        "eventYear": "1998", "eventName": "Mulan",
+        "watchPercentage": "30"
+      }
+
+{
+       "streamShortName": "net", "groupShortName": "age_40_50",
+        "eventYear": "2020", "eventName": "30 for 30: Monaco",
+        "watchPercentage": "50"
+      }
+
+#9 http://localhost:8080/api/display_demo
+{ "shortName": "age_40_50" }
+
+#10 http://localhost:8080/api/display_studio
+{ "shortName": "disney" }
+{ "shortName": "espn" }
+
+#11 http://localhost:8080/api/display_stream
+{ "shortName": "apv" }
+{ "shortName": "net" }
+
+#12 http://localhost:8080/api/display_events
+{}
+
+#13 http://localhost:8080/api/display_offers
+{}
+
+
+# update will fail(return false).
+# A5 13 http://localhost:8080/api/update_demo
+{"shortName":"age_40_50", "longName":"Viewers between 40 and 50", "numberOfAccounts":"1000"}
+
+# A5 14 http://localhost:8080/api/update_event
+{"eventName": "Mulan", "eventYear": "1998", "eventType": "movie",
+ "eventDuration": "88", "eventStudio": "disney", "licenseFee": "1200"}
+
+# A5 15 http://localhost:8080/api/update_stream
+{ "shortName": "apv", "longName": "Amazon Prime Video", "subscribePrice": "15" }
+
+# A5 16 http://localhost:8080/api/retract_movie
+{ "streamShortName": "apv", "eventYear": "1998", "eventName": "Mulan" }
+
+#8 http://localhost:8080/api/next_month
+{}
+
+# time changed
+#12 http://localhost:8080/api/display_events
+{}
+
+#13 http://localhost:8080/api/display_offers
+{}
+
+# update will succeed
+# A5 13 http://localhost:8080/api/update_demo
+{"shortName":"age_40_50", "longName":"Viewers between 40 and 50", "numberOfAccounts":"1000"}
+
+# A5 14 http://localhost:8080/api/update_event
+{"eventName": "Mulan", "eventYear": "1998", "eventType": "movie",
+ "eventDuration": "88", "eventStudio": "disney", "licenseFee": "1200"}
+
+# A5 15 http://localhost:8080/api/update_stream
+{ "shortName": "apv", "longName": "Amazon Prime Video", "subscribePrice": "15" }
+
+# Try add and retract movie
+http://localhost:8080/api/offer_movie
+{ "streamShortName": "apv", "eventYear": "1998", "eventName": "Mulan" }
+http://localhost:8080/api/display_studio
+{ "shortName": "disney" }
+http://localhost:8080/api/retract_movie
+{ "streamShortName": "apv", "eventYear": "1998", "eventName": "Mulan" }
+http://localhost:8080/api/display_studio
+{ "shortName": "disney" }

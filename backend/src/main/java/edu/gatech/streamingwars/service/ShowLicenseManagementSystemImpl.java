@@ -29,7 +29,7 @@ public class ShowLicenseManagementSystemImpl implements ShowLicenseManagementSys
         this.studioDAO = studioDAO;
         this.subscriptionRecordDAO = subscriptionRecordDAO;
         this.watchRecordDAO = watchRecordDAO;
-        this.currentYearMonth = currentYearMonth;
+        this.currentYearMonth = yearMonth;
     }
 
     @Override
@@ -110,8 +110,18 @@ public class ShowLicenseManagementSystemImpl implements ShowLicenseManagementSys
     @Transactional
     public void streamingServiceGetLicenseFromStudio(String streamingServiceSN, String showSN, int year, int watchPrice) {
         Show show = showDAO.findById(showSN, year);
+        System.out.print(show);
         int licenseFee = show.getLicenseFee();
         String studioShortName = show.getStudioName();
+//        String output = new String();
+//        output += "streamingServiceSN:"+streamingServiceSN+"\n"
+//                +"showSN"+"\n"
+//                + year+"\n"
+//                + currentYearMonth.toString() +"\n"
+//                + licenseFee+"\n"
+//                + watchPrice+"\n"
+//                +studioShortName;
+//        System.out.println(output);
         ShowLicenseRecord showLicenseRecord = new ShowLicenseRecord(streamingServiceSN, showSN, year, currentYearMonth.toString(), licenseFee, watchPrice, studioShortName);
         showLicenseRecordDAO.save(showLicenseRecord);
     }
@@ -129,18 +139,21 @@ public class ShowLicenseManagementSystemImpl implements ShowLicenseManagementSys
     }
 
     @Override
+    @Transactional
     public boolean updateEvent(String showSN, int year, int duration, int licenseFee) {
         Show show = showDAO.findById(showSN, year);
         show.setDuration(duration);
         List<WatchRecord> records = watchRecordDAO.findByShowYearYearMonth(showSN, year, currentYearMonth.toString());
         if (records.isEmpty()) {
             show.setLicenseFee(licenseFee);
+            showDAO.save(show);
             return true;
         }
         return false;
     }
 
     @Override
+    @Transactional
     public boolean retractMovie(String streamingServiceSN, String showSN, int year) {
         List<WatchRecord> records = watchRecordDAO.findByStreamingServiceShowYearYearMonth(streamingServiceSN, showSN, year, currentYearMonth.toString());
         if (records.isEmpty()) {

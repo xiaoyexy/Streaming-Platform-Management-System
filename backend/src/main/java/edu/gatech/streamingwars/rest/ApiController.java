@@ -46,12 +46,12 @@ public class ApiController {
     @PostMapping("/create_event")
     public void createEvent(@RequestBody HashMap<String, String> params) {
         System.out.println("/create_event:" + params.toString());
-        String showType = params.get("type");
-        String showName = params.get("name");
-        Integer yearProduced = Integer.valueOf(params.get("yearProduced"));
-        Integer duration = Integer.valueOf(params.get("duration"));
+        String showType = params.get("eventType");
+        String showName = params.get("eventName");
+        Integer yearProduced = Integer.valueOf(params.get("eventYear"));
+        Integer duration = Integer.valueOf(params.get("eventDuration"));
         Integer licenseFee = Integer.valueOf(params.get("licenseFee"));
-        String studioSN = params.get("studio");
+        String studioSN = params.get("eventStudio");
         Show show = new Show(showName, yearProduced, duration, showType, licenseFee, studioSN);
         showLicenseManagementSystem.addShow(show);
     }
@@ -66,12 +66,12 @@ public class ApiController {
         showLicenseManagementSystem.addStudio(studio);
     }
 
-    @PostMapping("/create_streaming_service")
+    @PostMapping("/create_stream")
     public void createStream(@RequestBody HashMap<String, String> params) {
-        System.out.println("/create_streaming_service:" + params.toString());
+        System.out.println("/create_stream:" + params.toString());
         String shortName = params.get("shortName");
         String longName = params.get("longName");
-        Integer subscriptionPrice = Integer.valueOf(params.get("subscriptionPrice"));
+        Integer subscriptionPrice = Integer.valueOf(params.get("subscribePrice"));
         StreamingService streamingService = new StreamingService(shortName, longName, subscriptionPrice);
         streamingServiceSystem.addStreamingService(streamingService);
     }
@@ -79,18 +79,18 @@ public class ApiController {
     @PostMapping("/offer_movie")
     public void offerMovie(@RequestBody HashMap<String, String> params) {
         System.out.println("/offer_movie:" + params.toString());
-        String streamingServiceSN = params.get("streamingService");
-        String showSN = params.get("movieName");
-        Integer year = Integer.valueOf(params.get("yearProduced"));
+        String streamingServiceSN = params.get("streamShortName");
+        String showSN = params.get("eventName");
+        Integer year = Integer.valueOf(params.get("eventYear"));
         showLicenseManagementSystem.streamingServiceGetLicenseFromStudio(streamingServiceSN, showSN, year, 0);
     }
 
     @PostMapping("/offer_ppv")
     public void offerPPV(@RequestBody HashMap<String, String> params) {
         System.out.println("/offer_ppv:" + params.toString());
-        String streamingServiceSN = params.get("streamingService");
-        String showSN = params.get("payPerViewName");
-        Integer year = Integer.valueOf(params.get("yearProduced"));
+        String streamingServiceSN = params.get("streamShortName");
+        String showSN = params.get("eventName");
+        Integer year = Integer.valueOf(params.get("eventYear"));
         Integer price = Integer.valueOf(params.get("viewingPrice"));
         showLicenseManagementSystem.streamingServiceGetLicenseFromStudio(streamingServiceSN, showSN, year, price);
     }
@@ -98,15 +98,15 @@ public class ApiController {
     @PostMapping("/watch_event")
     public void watchEvent(@RequestBody HashMap<String, String> params) {
         System.out.println("/watch_event:" + params.toString());
-        String demographicGroupSN = params.get("demographicGroup");
-        Integer percentage = Integer.valueOf(params.get("percentage"));
-        String streamingServiceSN = params.get("streamingService");
-        Integer year = Integer.valueOf(params.get("yearProduced"));
+        String demographicGroupSN = params.get("groupShortName");
+        Integer percentage = Integer.valueOf(params.get("watchPercentage"));
+        String streamingServiceSN = params.get("streamShortName");
+        Integer year = Integer.valueOf(params.get("eventYear"));
         String showSN = params.get("eventName");
         streamingServiceSystem.demographicGroupWatchShow(demographicGroupSN, percentage, streamingServiceSN, showSN, year);
     }
 
-    @GetMapping("/next_month")
+    @PostMapping("/next_month")
     public void nextMonth() {
         System.out.println("/next_month");
         streamingServiceSystem.nextMonth();
@@ -187,9 +187,9 @@ public class ApiController {
     @PostMapping("/update_event")
     public boolean updateEvent(@RequestBody HashMap<String, String> params) {
         System.out.println("/update_event:" + params.toString());
-        String name = params.get("name");
-        Integer yearProduced = Integer.valueOf(params.get("yearProduced"));
-        Integer duration = Integer.valueOf(params.get("duration"));
+        String name = params.get("eventName");
+        Integer yearProduced = Integer.valueOf(params.get("eventYear"));
+        Integer duration = Integer.valueOf(params.get("eventDuration"));
         Integer licenseFee = Integer.valueOf(params.get("licenseFee"));
         return showLicenseManagementSystem.updateEvent(name, yearProduced, duration, licenseFee);
     }
@@ -199,16 +199,16 @@ public class ApiController {
         System.out.println("/update_stream:" + params.toString());
         String shortName = params.get("shortName");
         String longName = params.get("longName");
-        Integer subscriptionPrice = Integer.valueOf(params.get("subscriptionPrice"));
+        Integer subscriptionPrice = Integer.valueOf(params.get("subscribePrice"));
         return streamingServiceSystem.updateStream(shortName, longName, subscriptionPrice);
     }
 
     @PostMapping("/retract_movie")
     public boolean retractMovie(@RequestBody HashMap<String, String> params) {
         System.out.println("/retract_movie:" + params.toString());
-        String streamingServiceSN = params.get("streamingService");
-        String showSN = params.get("movieName");
-        Integer year = Integer.valueOf(params.get("movieYear"));
+        String streamingServiceSN = params.get("streamShortName");
+        String showSN = params.get("eventName");
+        Integer year = Integer.valueOf(params.get("eventYear"));
         return showLicenseManagementSystem.retractMovie(streamingServiceSN, showSN, year);
     }
 
