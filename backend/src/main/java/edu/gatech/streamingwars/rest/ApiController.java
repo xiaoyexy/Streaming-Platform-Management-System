@@ -164,12 +164,12 @@ public class ApiController {
         return res;
     }
 
-    @GetMapping("display_events")
+    @PostMapping("display_events")
     public List<Show> displayEvents() {
         return showLicenseManagementSystem.displayShows();
     }
 
-    @GetMapping("display_offers")
+    @PostMapping("display_offers")
     public List<ShowLicenseRecord> displayOffers(){
         return showLicenseManagementSystem.displayOffers();
     }
@@ -184,5 +184,32 @@ public class ApiController {
         return streamingServiceSystem.updateDemo(shortName, longName, numberOfAccounts);
     }
 
+    @PostMapping("/update_event")
+    public boolean updateEvent(@RequestBody HashMap<String, String> params) {
+        System.out.println("/update_event:" + params.toString());
+        String name = params.get("name");
+        Integer yearProduced = Integer.valueOf(params.get("yearProduced"));
+        Integer duration = Integer.valueOf(params.get("duration"));
+        Integer licenseFee = Integer.valueOf(params.get("licenseFee"));
+        return showLicenseManagementSystem.updateEvent(name, yearProduced, duration, licenseFee);
+    }
+
+    @PostMapping("/update_stream")
+    public boolean updateStream(@RequestBody HashMap<String, String> params) {
+        System.out.println("/update_stream:" + params.toString());
+        String shortName = params.get("shortName");
+        String longName = params.get("longName");
+        Integer subscriptionPrice = Integer.valueOf(params.get("subscriptionPrice"));
+        return streamingServiceSystem.updateStream(shortName, longName, subscriptionPrice);
+    }
+
+    @PostMapping("/retract_movie")
+    public boolean retractMovie(@RequestBody HashMap<String, String> params) {
+        System.out.println("/retract_movie:" + params.toString());
+        String streamingServiceSN = params.get("streamingService");
+        String showSN = params.get("movieName");
+        Integer year = Integer.valueOf(params.get("movieYear"));
+        return showLicenseManagementSystem.retractMovie(streamingServiceSN, showSN, year);
+    }
 
 }
