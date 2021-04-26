@@ -58,7 +58,7 @@ public class ApiController {
 
 
     @PostMapping("/create_studio")
-    public void createStuido(@RequestBody HashMap<String, String> params) {
+    public void createStudio(@RequestBody HashMap<String, String> params) {
         System.out.println("/create_demo:" + params.toString());
         String shortName = params.get("shortName");
         String longName = params.get("longName");
@@ -67,7 +67,7 @@ public class ApiController {
     }
 
     @PostMapping("/create_streaming_service")
-    public void createStudio(@RequestBody HashMap<String, String> params) {
+    public void createStream(@RequestBody HashMap<String, String> params) {
         System.out.println("/create_streaming_service:" + params.toString());
         String shortName = params.get("shortName");
         String longName = params.get("longName");
