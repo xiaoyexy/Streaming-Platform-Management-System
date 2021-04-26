@@ -37,7 +37,10 @@ public class StreamingServiceDAOImpl implements StreamingServiceDAO{
 
     @Override
     public StreamingService findById(String streamingServiceShortName) {
-        return null;
+
+        Session currentSession = entityManager.unwrap(Session.class);
+        StreamingService streamingService = currentSession.get(StreamingService.class, streamingServiceShortName);
+        return streamingService;
     }
 
     @Override

@@ -38,7 +38,9 @@ public class StudioDAOImpl implements StudioDAO{
 
     @Override
     public Studio findById(String studioShortName) {
-        return null;
+        Session currentSession = entityManager.unwrap(Session.class);
+        Studio studio = currentSession.get(Studio.class, studioShortName);
+        return studio;
     }
 
     @Override
