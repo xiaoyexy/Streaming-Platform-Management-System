@@ -33,7 +33,7 @@ public class YearMonth {
 
     public YearMonth() {
         this.year = 2020;
-        this.month = 8;
+        this.month = 10;
     }
 
     public void nextMonth() {

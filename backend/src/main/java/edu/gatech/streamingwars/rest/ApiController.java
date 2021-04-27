@@ -212,4 +212,10 @@ public class ApiController {
         return showLicenseManagementSystem.retractMovie(streamingServiceSN, showSN, year);
     }
 
+    @PostMapping("/display_time")
+    public String displayTime() {
+        System.out.println("/display_time");
+        return streamingServiceSystem.displayTime();
+    }
+
 }
