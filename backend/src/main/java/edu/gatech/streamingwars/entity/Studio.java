@@ -38,4 +38,12 @@ public class Studio {
         this.shortName = shortName;
         this.longName = longName;
     }
+
+    @Override
+    public String toString() {
+        return "Studio{" +
+                "shortName='" + shortName + '\'' +
+                ", longName='" + longName + '\'' +
+                '}';
+    }
 }
