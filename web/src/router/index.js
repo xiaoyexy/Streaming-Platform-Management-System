@@ -37,6 +37,7 @@ import store from '@/store'
 import Display from '@/views/Display'
 import Create from '@/views/Create'
 import Update from '@/views/Update'
+import Retract from '@/views/Retract'
 
 Vue.use(Router)
 
@@ -106,6 +107,11 @@ const router = new Router({
       path: '/offer',
       name: 'offer',
       component: Offer
+    },
+    {
+      path: '/retract',
+      name: 'retract',
+      component: Retract
     },
 
     // otherwise redirect to home

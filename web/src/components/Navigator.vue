@@ -107,7 +107,8 @@ export default {
       ['Create', 'create'],
       ['Update', 'update'],
       ['Watch', 'watch'],
-      ['Offer', 'offer']
+      ['Offer', 'offer'],
+      ['Retract', 'retract']
     ]
   }),
 

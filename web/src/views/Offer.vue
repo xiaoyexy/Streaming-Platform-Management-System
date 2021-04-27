@@ -23,53 +23,53 @@
     </v-row>
      <v-row v-if= " select.state=== 'Movie'" >
         <v-text-field
-                v-model= select.requirements.streamingService
+                v-model= select.requirements.streamShortName
                 :rules="nameRules"
-                :counter="10"
-                label= streamingService
+                :counter="20"
+                label= streamShortName
                 required
             ></v-text-field>
             <v-text-field
-                v-model= select.requirements.movieName
+                v-model= select.requirements.eventName
                 :rules="nameRules"
-                :counter="10"
-                label= movieName
+                :counter="20"
+                label= eventName
                 required
             ></v-text-field>
             <v-text-field
-                v-model= select.requirements.yearProduced
+                v-model= select.requirements.eventYear
                 :rules="nameRules"
-                :counter="10"
-                label= yearProduced
+                :counter="20"
+                label= eventYear
                 required
             ></v-text-field>
     </v-row>
     <v-row v-if= " select.state=== 'Pay Per View'" >
         <v-text-field
-                v-model= select.requirements.streamingService
+                v-model= select.requirements.streamShortName
                 :rules="nameRules"
-                :counter="10"
-                label= streamingService
+                :counter="20"
+                label= streamShortName
                 required
             ></v-text-field>
             <v-text-field
-                v-model= select.requirements.payPerViewName
+                v-model= select.requirements.eventName
                 :rules="nameRules"
-                :counter="10"
-                label= movieName
+                :counter="20"
+                label= eventName
                 required
             ></v-text-field>
             <v-text-field
-                v-model= select.requirements.yearProduced
+                v-model= select.requirements.eventYear
                 :rules="nameRules"
-                :counter="10"
-                label= yearProduced
+                :counter="20"
+                label= eventYear
                 required
             ></v-text-field>
             <v-text-field
                 v-model= select.requirements.viewingPrice
                 :rules="nameRules"
-                :counter="10"
+                :counter="20"
                 label= viewingPrice
                 required
             ></v-text-field>
@@ -83,7 +83,7 @@
     </v-btn>
     </v-row>
     <v-row v-if="response">
-        {{ response }}
+        {{ response.data }}
     </v-row>
     </v-container>
 </template>
@@ -100,18 +100,18 @@ export default {
       select: {
         state: 'Movie',
         url: '/api/offer_movie',
-        requirements: { streamingService: '', movieName: '', yearProduced: '' }
+        requirements: { streamShortName: '', eventName: '', eventYear: '' }
       },
       items: [
         {
           state: 'Movie',
           url: '/api/offer_movie',
-          requirements: { streamingService: '', movieName: '', yearProduced: '' }
+          requirements: { streamShortName: '', eventName: '', eventYear: '' }
         },
         {
           state: 'Pay Per View',
           url: '/api/offer_ppv',
-          requirements: { streamingService: '', payPerViewName: '', yearProduced: '', viewingPrice: '' }
+          requirements: { streamShortName: '', eventName: '', eventYear: '', viewingPrice: '' }
         }
       ]
     }
@@ -122,8 +122,13 @@ export default {
       const payload = this.select.requirements
       const url = this.select.url
       axios.post(url, payload).then(res => {
-        this.response = res
-      })
+        this.response = { data: res.config.data + 'created' }
+      }).catch(
+        function (e) {
+          console.log(e)
+          alert('Failed')
+        }
+      )
     }
   }
 }

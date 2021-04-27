@@ -1,4 +1,13 @@
 <template>
+<v-container>
+  <v-row> Users: </v-row>
+  <v-row> Normal User -- Username: user, Password: User, Role: user</v-row>
+  <v-row> Admin User  -- Username: admin, Password: admin, Role: admin</v-row>
+  <v-row>
+    <p>Note: In this case, a normal user can only view the displays while the admin user can
+    also edit: create, update, retract, watch and offer </p>
+  </v-row>
+  <v-container>
   <form>
     <v-text-field
       v-model="form.username"
@@ -26,6 +35,12 @@
       clear
     </v-btn>
   </form>
+  </v-container>
+  <v-spacer></v-spacer>
+  <v-row></v-row>
+  <v-row>
+  </v-row>
+</v-container>
 </template>
 
 <script>

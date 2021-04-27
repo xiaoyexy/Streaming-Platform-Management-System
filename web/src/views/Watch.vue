@@ -2,25 +2,25 @@
 <v-container>
   <form>
     <v-text-field
-      v-model="form.demographicGroup"
+      v-model="form.groupShortName"
       label="Demographic Group"
        :rules="nameRules"
       required
     ></v-text-field>
     <v-text-field
-      v-model="form.percentage"
+      v-model="form.watchPercentage"
       label="Percentage of Group Watched the Event"
       :rules="nameRules"
       required
     ></v-text-field>
     <v-text-field
-      v-model="form.streamingService"
+      v-model="form.streamShortName"
       label="streaming Service"
       :rules="nameRules"
       required
     ></v-text-field>
     <v-text-field
-      v-model="form.yearProduced"
+      v-model="form.eventYear"
       label="Year Event Produced"
       :rules="nameRules"
       required
@@ -42,8 +42,10 @@
       clear
     </v-btn>
   </form>
+  <v-row></v-row>
+  <v-row></v-row>
   <v-row v-if="response">
-      {{response}}
+      {{response.data }}
   </v-row>
 </v-container>
 </template>
@@ -57,10 +59,10 @@ export default {
       v => !!v || 'Required'
     ],
     form: {
-      demographicGroup: '',
-      percentage: '',
-      streamingService: '',
-      yearProduced: '',
+      groupShortName: '',
+      watchPercentage: '',
+      streamShortName: '',
+      eventYear: '',
       eventName: ''
     }
   }),
@@ -71,15 +73,12 @@ export default {
       const url = '/api/watch_event'
       axios.post(url, this.form).then(
         res => {
-          this.response = res
+          this.response = { data: res.config.data + 'submitted' }
         }
-      )
-    },
-    clear () {
-      this.name = ''
-      this.email = ''
-      this.select = null
-      this.checkbox = false
+      ).catch(function (e) {
+        console.log(e)
+        alert('Failed')
+      })
     }
   }
 }
