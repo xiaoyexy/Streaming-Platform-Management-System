@@ -56,7 +56,7 @@ export default {
       commit('SET_SIGNIN', signin)
     },
 
-    signOut ({ commit }) {
+    async signOut ({ commit }) {
       commit('SET_SIGNIN', null)
       localStorage.removeItem('currentUser')
     }

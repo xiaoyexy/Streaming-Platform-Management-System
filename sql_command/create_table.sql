@@ -114,3 +114,7 @@ INSERT INTO watch_record (percentage_of_account, demographic_group_short_name, s
 (50, 'dg1', 's2', 2000, 'ss1', '2020-8', 10, 100),
 (50, 'dg2', 's1', 2000, 'ss2', '2020-8', 0, 200),
 (50, 'dg3', 's2', 2000, 'ss3', '2020-8', 10, 300);
+
+INSERT INTO users (id, firstname, lastname,password, role, username) VALUES
+(1,'Normal', 'User','user','user','user'),
+(2, 'Admin','Super', 'admin', 'admin', 'admin')

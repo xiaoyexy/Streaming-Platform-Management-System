@@ -25,21 +25,21 @@
         <v-text-field
                 v-model= select.requirements.shortName
                 :rules="nameRules"
-                :counter="10"
+                :counter="100"
                 label= shortName
                 required
             ></v-text-field>
             <v-text-field
                 v-model= select.requirements.longName
                 :rules="nameRules"
-                :counter="10"
+                :counter="100"
                 label= longName
                 required
             ></v-text-field>
             <v-text-field
                 v-model= select.requirements.numberOfAccounts
                 :rules="nameRules"
-                :counter="10"
+                :counter="100"
                 label= numberOfAccounts
                 required
             ></v-text-field>
@@ -48,22 +48,22 @@
         <v-text-field
                 v-model= select.requirements.shortName
                 :rules="nameRules"
-                :counter="10"
+                :counter="100"
                 label= shortName
                 required
             ></v-text-field>
             <v-text-field
                 v-model= select.requirements.longName
                 :rules="nameRules"
-                :counter="10"
+                :counter="100"
                 label= longName
                 required
             ></v-text-field>
             <v-text-field
-                v-model= select.requirements.subscriptionPrice
+                v-model= select.requirements.subscribePrice
                 :rules="nameRules"
-                :counter="10"
-                label= subscriptionPrice
+                :counter="100"
+                label= subscribePrice
                 required
             ></v-text-field>
     </v-row>
@@ -71,58 +71,58 @@
         <v-text-field
                 v-model= select.requirements.shortName
                 :rules="nameRules"
-                :counter="10"
+                :counter="100"
                 label= shortName
                 required
             ></v-text-field>
             <v-text-field
                 v-model= select.requirements.longName
                 :rules="nameRules"
-                :counter="10"
+                :counter="100"
                 label= longName
                 required
             ></v-text-field>
     </v-row>
     <v-row v-if= " select.state=== 'Event'" >
         <v-text-field
-                v-model= select.requirements.type
+                v-model= select.requirements.eventType
                 :rules="nameRules"
-                :counter="10"
-                label= shortName
+                :counter="100"
+                label= "Type: movie or ppv"
                 required
             ></v-text-field>
             <v-text-field
-                v-model= select.requirements.name
+                v-model= select.requirements.eventName
                 :rules="nameRules"
-                :counter="10"
-                label= longName
+                :counter="100"
+                label= "Event Name"
                 required
             ></v-text-field>
             <v-text-field
-                v-model= select.requirements.yearProduced
+                v-model= select.requirements.eventYear
                 :rules="nameRules"
-                :counter="10"
-                label= yearProduced
+                :counter="100"
+                label= "year Produced"
                 required
             ></v-text-field>
             <v-text-field
-                v-model= select.requirements.duration
+                v-model= select.requirements.eventDuration
                 :rules="nameRules"
-                :counter="10"
+                :counter="100"
                 label= duration
                 required
             ></v-text-field>
             <v-text-field
                 v-model= select.requirements.licenseFee
                 :rules="nameRules"
-                :counter="10"
+                :counter="100"
                 label= licenseFee
                 required
             ></v-text-field>
             <v-text-field
-                v-model= select.requirements.studio
+                v-model= select.requirements.eventStudio
                 :rules="nameRules"
-                :counter="10"
+                :counter="100"
                 label= studio
                 required
             ></v-text-field>
@@ -135,8 +135,8 @@
       submit
     </v-btn>
     </v-row>
-    <v-row v-if="response">
-        {{ response }}
+    <v-row v-if="response.data">
+        {{ response.data }}
     </v-row>
 </v-container>
 </template>
@@ -146,7 +146,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      response: '',
+      response: { data: null },
       nameRules: [
         v => !!v || 'Required'
       ],
@@ -163,8 +163,8 @@ export default {
         },
         {
           state: 'Stream Service',
-          url: '/api/create_streaming_service',
-          requirements: { shortName: '', longName: '', subscriptionPrice: '' }
+          url: '/api/create_stream',
+          requirements: { shortName: '', longName: '', subscribePrice: '' }
         },
         {
           state: 'Studio',
@@ -175,7 +175,7 @@ export default {
         {
           state: 'Event',
           url: '/api/create_event',
-          requirements: { type: '', name: '', yearProduced: '', duration: '', licenseFee: '', studio: '' }
+          requirements: { eventType: '', eventName: '', eventYear: '', eventDuration: '', licenseFee: '', eventStudio: '' }
         }
       ]
     }
@@ -187,8 +187,17 @@ export default {
       const payload = this.select.requirements
       const url = this.select.url
       axios.post(url, payload).then(res => {
-        this.response = res
-      })
+        if (res.status === 200) {
+          this.response = { data: res.config.data + 'created' }
+        } else {
+          this.response = { data: 'failed' }
+        }
+      }).catch(
+        function (e) {
+          console.log(e)
+          alert('Failed')
+        }
+      )
     }
   }
 }

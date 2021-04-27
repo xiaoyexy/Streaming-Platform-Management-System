@@ -31,14 +31,13 @@
              <v-btn @click.prevent="query">Display</v-btn>
          </v-col>
         </v-row>
-        <v-row v-if="response" >
-             <v-col cols="1">
-                <strong>ReSULT </strong>
-             </v-col>
-             <v-col cols="1">
-                <strong>{{ parseStatus(response.status )}} </strong>
-             </v-col>
-        </v-row >
+        <v-container v-if="response" >
+           <v-row
+            v-for="(r, i) in response"
+            :key=i>
+            {{ r }}
+            </v-row>
+        </v-container >
     </v-container>
 </template>
 
@@ -47,7 +46,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      select: { state: 'Demographic Group' },
+      select: { state: 'Demographic Group', url: '/api/display_demo' },
       items: [
         { state: 'Demographic Group', url: '/api/display_demo' },
         { state: 'Stream Service', url: '/api/display_stream' },
@@ -69,11 +68,12 @@ export default {
         }
         const data = { shortName: this.title }
         axios.post(this.select.url, data).then(res => {
-          this.response = res
+          console.log(res)
+          this.response = [res.data]
         })
       } else {
-        axios.get(this.select.url).then(res => {
-          this.response = res
+        axios.post(this.select.url, {}).then(res => {
+          this.response = res.data
         })
       }
     },
