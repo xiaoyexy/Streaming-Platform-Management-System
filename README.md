@@ -1,4 +1,4 @@
-# Example Dockerized Java Service
+# Streaming Wars
 
 This repository contains an example Java service to help get your group project started.
 It contains two Docker separate service to demonstrate a how we may deploy a separate service for an application server and a front end service. In this example, we have a simple Java backend that uses [Spring Boot](https://spring.io/projects/spring-boot) as our web service framework, and an [nginx](https://www.nginx.com/) web server that serves our html file.
@@ -9,7 +9,6 @@ For your convenience we have defined a [docker-compose](https://docs.docker.com/
 We can simply run `make && make up` to start our service. For those that do not have `make` installed, we can effectively do the same thing by running the following:
 ```
 docker build -t gatech/backend -f ./images/Dockerfile.backend ./backend
-docker build -t gatech/frontend -f ./images/Dockerfile.frontend ./frontend
 docker build -t gatech/web -f ./images/Dockerfile.web ./web
 docker build -t gatech/nginx -f ./images/Dockerfile.nginx ./nginx
 docker-compose -p gatech -f docker-compose.yml up -d

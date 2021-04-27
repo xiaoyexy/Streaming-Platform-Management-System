@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
   namespaced: true,
@@ -42,7 +42,14 @@ export default {
   },
   actions: {
     async signIn ({ dispatch }, credentials) {
-      let response = await axios.post('/users/authenticate', credentials)
+      // let response = await axios.post('/users/authenticate', credentials)
+      let response = { data: null }
+      console.log(credentials)
+      if (credentials.username === 'user' && credentials.password === 'user') {
+        response = { data: [{ id: 1, username: 'user', password: 'user', firstname: 'Normal', lastname: 'User', role: 'user' }] }
+      } else if (credentials.username === 'admin' && credentials.password === 'admin') {
+        response = { data: [{ id: 2, username: 'admin', password: 'admin', firstname: 'Admin', lastname: 'Super', role: 'admin' }] }
+      }
       //   console.log(response)
       // console.log(response.data)
       if (response.data !== null || response.data.length === 1) {
