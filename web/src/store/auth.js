@@ -50,11 +50,8 @@ export default {
       } else if (credentials.username === 'admin' && credentials.password === 'admin') {
         response = { data: [{ id: 2, username: 'admin', password: 'admin', firstname: 'Admin', lastname: 'Super', role: 'admin' }] }
       }
-      //   console.log(response)
-      // console.log(response.data)
+
       if (response.data !== null || response.data.length === 1) {
-        // console.log(typeof (response.data[0]))
-        // console.log(response.data[0])
         localStorage.setItem('currentUser', JSON.stringify(response.data[0]))
       }
       return dispatch('attempt', response.data)

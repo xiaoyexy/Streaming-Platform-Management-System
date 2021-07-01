@@ -11,6 +11,7 @@ import VueIframe from 'vue-iframes'
 axios.defaults.baseURL = 'http://localhost:8080'
 Vue.config.productionTip = false
 
+localStorage.clear()
 store.dispatch('auth/attempt', [JSON.parse(localStorage.getItem('currentUser'))])
 
 Vue.use(Vuelidate)

@@ -41,7 +41,7 @@ services:
       # expose the container's port 80 on the host's 3001
       - "3001:80"
     volumes:
-      - ./web:/home/node/web
+      - ./web:/app
     environment:
       - VUE_APP_ID=3001
       - NGINX_HOST=localhost
@@ -52,7 +52,7 @@ services:
     ports:
       - "3002:80"
     volumes:
-      - ./web:/home/node/web
+      - ./web:/app
     environment:
       - VUE_APP_ID=3002
       - NGINX_HOST=localhost
@@ -63,7 +63,7 @@ services:
     ports:
       - "3003:80"
     volumes:
-      - ./web:/home/node/web
+      - ./web:/app
     environment:
       - VUE_APP_ID=3003
       - NGINX_HOST=localhost
