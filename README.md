@@ -1,6 +1,6 @@
 # Streaming Platform Management Sysyem
 
-It's an interactive web application for differnt users to track the different offerings from various streaming services,as well as how these offerings are being accessed by different demographic groups of consumers, and display usage measurements for the various services.
+It's an interactive web application for different users to track the different offerings from various streaming services,as well as how these offerings are being accessed by different demographic groups of consumers, and display usage measurements for the various services.
 
 
 # Deployment Diagram
